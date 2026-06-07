@@ -3,369 +3,412 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hithesh Patel — Data Engineer</title>
+<title>Hitesh Patel — Data Engineer</title>
+<meta name="description" content="Hitesh Patel — Data Engineer specializing in dbt, Snowflake, and AI-driven automation for enterprise finance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,800&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --navy:#1F4E79;--navy-mid:#2563A8;--navy-light:#3B82C4;
-  --navy-pale:#EBF3FB;--navy-border:#B5D4F4;
-  --dark:#0F1923;--text:#2D3748;--muted:#64748B;--subtle:#94A3B8;
-  --border:#E2E8F0;--bg:#FFFFFF;--bg2:#F8FAFC;--bg3:#F1F5F9;
-}
-html{scroll-behavior:smooth}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2.5rem;height:54px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-.nav-logo{font-weight:700;font-size:.95rem;color:var(--navy);letter-spacing:-.3px}
-.nav-links{display:flex;gap:1.75rem;list-style:none}
-.nav-links a{text-decoration:none;font-size:.825rem;color:var(--muted);transition:color .15s}
-.nav-links a:hover{color:var(--navy)}
-#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:calc(54px + 4rem) 2.5rem 4rem;background:#0F1923;position:relative;overflow:hidden}
-#hero::before{content:'';position:absolute;top:-40%;right:-20%;width:70%;height:160%;background:radial-gradient(ellipse,rgba(31,78,121,.35) 0%,transparent 65%);pointer-events:none}
-#hero::after{content:'';position:absolute;bottom:-30%;left:-10%;width:50%;height:120%;background:radial-gradient(ellipse,rgba(37,99,168,.15) 0%,transparent 65%);pointer-events:none}
-.hero-wrap{max-width:860px;margin:0 auto;width:100%;position:relative;z-index:1}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(31,78,121,.4);border:1px solid rgba(59,130,196,.3);color:#93C5FD;font-size:.75rem;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:1.75rem}
-.hero-eyebrow span{width:6px;height:6px;border-radius:50%;background:#3B82C4;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-h1.hero-title{font-size:clamp(2.4rem,5.5vw,4rem);font-weight:800;color:#F8FAFC;line-height:1.08;letter-spacing:-1.5px;margin-bottom:1.25rem}
-h1.hero-title em{font-style:normal;color:#60A5FA}
-.hero-sub{font-size:1.05rem;color:#94A3B8;max-width:560px;line-height:1.75;margin-bottom:2.5rem}
-.hero-sub strong{color:#CBD5E1;font-weight:500}
-.stat-row{display:flex;gap:0;margin-bottom:2.75rem;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;width:fit-content}
-.stat-item{padding:.9rem 1.75rem;border-right:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03)}
-.stat-item:last-child{border-right:none}
-.stat-num{font-size:1.65rem;font-weight:800;color:#F8FAFC;line-height:1;letter-spacing:-1px}
-.stat-label{font-size:.72rem;color:#64748B;margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
-.hero-cta{display:flex;gap:.75rem;flex-wrap:wrap}
-.btn-hero{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:8px;font-size:.875rem;font-weight:600;text-decoration:none;transition:all .15s}
-.btn-hero-primary{background:#2563A8;color:#fff;border:1px solid #3B82C4}
-.btn-hero-primary:hover{background:#3B82C4}
-.btn-hero-ghost{background:rgba(255,255,255,.06);color:#CBD5E1;border:1px solid rgba(255,255,255,.12)}
-.btn-hero-ghost:hover{background:rgba(255,255,255,.1);color:#fff}
-section{padding:5rem 2.5rem}
-.container{max-width:860px;margin:0 auto}
-.sec-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--navy);margin-bottom:.4rem}
-.sec-title{font-size:1.9rem;font-weight:800;color:var(--dark);letter-spacing:-.6px;margin-bottom:.35rem}
-.sec-sub{font-size:.95rem;color:var(--muted);margin-bottom:2.75rem;max-width:520px}
-.divider{width:36px;height:3px;background:var(--navy);border-radius:2px;margin-bottom:.75rem}
-#about{background:var(--bg)}
-.about-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:start}
-.about-body p{font-size:.95rem;color:var(--text);line-height:1.85;margin-bottom:1rem}
-.about-body p:last-child{margin-bottom:0}
-.kpi-stack{display:flex;flex-direction:column;gap:.75rem}
-.kpi{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.25rem;border-left:3px solid var(--navy)}
-.kpi-num{font-size:1.1rem;font-weight:800;color:var(--navy);letter-spacing:-.3px;line-height:1.2}
-.kpi-desc{font-size:.8rem;color:var(--muted);margin-top:3px;line-height:1.4}
-#skills{background:var(--bg2)}
-.skill-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.skill-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1.25rem}
-.skill-box h4{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:.875rem}
-.tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{font-size:.78rem;padding:4px 11px;border-radius:20px;border:1px solid var(--border);color:var(--muted);background:var(--bg2)}
-.tag.hi{background:var(--navy-pale);border-color:var(--navy-border);color:var(--navy);font-weight:600}
-#projects{background:var(--bg)}
-.projects-stack{display:flex;flex-direction:column;gap:1.5rem}
-.project{border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:box-shadow .2s,transform .2s;background:var(--bg)}
-.project:hover{box-shadow:0 8px 32px rgba(31,78,121,.1);transform:translateY(-3px)}
-.project.featured{border-color:var(--navy-border);border-width:1.5px}
-.project-top{padding:1.75rem 1.75rem 0;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
-.project-badges{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.875rem}
-.badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 10px;border-radius:20px}
-.badge-ai{background:#EDE9FE;color:#5B21B6}
-.badge-data{background:var(--navy-pale);color:var(--navy)}
-.badge-new{background:#DCFCE7;color:#166534}
-.project-title{font-size:1.15rem;font-weight:800;color:var(--dark);margin-bottom:.25rem;letter-spacing:-.3px}
-.project-org{font-size:.825rem;color:var(--muted)}
-.project-impact{display:flex;gap:1rem;padding:1.25rem 1.75rem;background:var(--bg2);margin:1.25rem 1.75rem;border-radius:8px;border:1px solid var(--border)}
-.impact-item{text-align:center;flex:1}
-.impact-num{font-size:1.2rem;font-weight:800;color:var(--navy);letter-spacing:-.5px}
-.impact-label{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
-.project-body{padding:0 1.75rem 1.5rem}
-.project-desc{font-size:.9rem;color:var(--text);line-height:1.75;margin-bottom:1.1rem}
-.point-list{display:flex;flex-direction:column;gap:6px;margin-bottom:1.25rem}
-.point{font-size:.855rem;color:var(--muted);padding-left:1.1rem;position:relative;line-height:1.6}
-.point::before{content:'→';position:absolute;left:0;color:var(--navy);font-size:.8rem;top:1px}
-.project-foot{padding:1rem 1.75rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
-.tech-row{display:flex;flex-wrap:wrap;gap:5px}
-.tech{font-size:.73rem;background:var(--bg3);border:1px solid var(--border);color:var(--muted);padding:2px 9px;border-radius:4px}
-.gh-link{display:inline-flex;align-items:center;gap:5px;font-size:.825rem;font-weight:600;color:var(--navy);text-decoration:none;padding:6px 14px;border:1px solid var(--navy-border);border-radius:7px;background:var(--navy-pale);transition:background .15s}
-.gh-link:hover{background:var(--navy-border)}
-.gh-link svg{width:15px;height:15px;flex-shrink:0}
-#experience{background:var(--bg2)}
-.timeline{padding-left:1.5rem;border-left:2px solid var(--border);display:flex;flex-direction:column}
-.titem{position:relative;padding-bottom:2.5rem}
-.titem:last-child{padding-bottom:0}
-.tdot{position:absolute;left:-1.6rem;top:4px;width:12px;height:12px;border-radius:50%;background:var(--navy);border:3px solid var(--bg2);outline:2px solid var(--navy)}
-.trole{font-size:1rem;font-weight:700;color:var(--dark)}
-.tcompany{font-size:.875rem;font-weight:500;color:var(--navy);margin-bottom:2px}
-.tdate{font-size:.78rem;color:var(--subtle);margin-bottom:1rem}
-.tproject{font-size:.825rem;font-weight:700;color:var(--text);margin:1rem 0 .4rem;display:flex;align-items:center;gap:.5rem}
-.tproject::before{content:'';display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--navy);flex-shrink:0}
-.tbullets{display:flex;flex-direction:column;gap:5px}
-.tbullets li{font-size:.855rem;color:var(--muted);list-style:none;padding-left:1rem;position:relative;line-height:1.6}
-.tbullets li::before{content:'·';position:absolute;left:0;color:var(--navy);font-size:1.3rem;line-height:1.1}
-#certifications{background:var(--bg)}
-.certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.875rem}
-.cert{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:.3rem;transition:border-color .15s}
-.cert:hover{border-color:var(--navy-border)}
-.cert-issuer{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--subtle)}
-.cert-name{font-size:.875rem;font-weight:600;color:var(--dark);line-height:1.35}
-.cert-date{font-size:.78rem;font-weight:600;color:var(--navy);margin-top:2px}
-#contact{background:var(--bg2)}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:.875rem}
-.clink{display:flex;align-items:center;gap:.875rem;padding:1.1rem 1.25rem;background:var(--bg);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color .15s,background .15s}
-.clink:hover{border-color:var(--navy-border);background:var(--navy-pale)}
-.clink-icon{width:38px;height:38px;border-radius:8px;background:var(--navy-pale);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.clink-icon svg{width:18px;height:18px;color:var(--navy)}
-.clink-label{font-size:.72rem;color:var(--subtle);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
-.clink-val{font-size:.875rem;font-weight:600;color:var(--dark)}
-footer{padding:2rem 2.5rem;text-align:center;border-top:1px solid var(--border)}
-footer p{font-size:.8rem;color:var(--subtle)}
-@media(max-width:640px){
-  .about-layout,.skill-grid,.certs-grid,.contact-grid{grid-template-columns:1fr}
-  .stat-row{flex-direction:column;width:100%}
-  .stat-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
-  .stat-item:last-child{border-bottom:none}
-  .project-impact{flex-wrap:wrap}
-  nav{padding:0 1rem}
-  .nav-links{gap:1rem}
-}
+  :root{
+    --ink:#0e1726;
+    --ink-soft:#1b2538;
+    --paper:#f4f1ea;
+    --paper-warm:#ece7db;
+    --accent:#c8643c;       /* terracotta */
+    --accent-deep:#a44e2c;
+    --teal:#2f6b6b;
+    --muted:#6b7384;
+    --muted-light:#9aa1b0;
+    --line:rgba(14,23,38,0.12);
+    --line-light:rgba(244,241,234,0.14);
+    --maxw:1080px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Newsreader',Georgia,serif;
+    font-size:18px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--accent);color:var(--paper)}
+  a{color:inherit;text-decoration:none}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+  /* grain + atmosphere */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:0.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ===== NAV ===== */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 28px;
+    backdrop-filter:blur(0px);
+    transition:background .4s ease, backdrop-filter .4s ease, padding .4s ease, box-shadow .4s ease;
+  }
+  nav.scrolled{
+    background:rgba(244,241,234,0.82);
+    backdrop-filter:blur(12px) saturate(140%);
+    padding:12px 28px;
+    box-shadow:0 1px 0 var(--line);
+  }
+  .nav-name{font-family:'Fraunces';font-weight:600;font-size:18px;letter-spacing:-0.01em}
+  .nav-name b{color:var(--accent)}
+  .nav-links{display:flex;gap:26px;font-family:'JetBrains Mono';font-size:12px;letter-spacing:0.04em;text-transform:uppercase}
+  .nav-links a{position:relative;color:var(--muted);transition:color .25s}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0;background:var(--accent);transition:width .3s}
+  .nav-links a:hover::after{width:100%}
+  @media(max-width:680px){.nav-links{display:none}}
+
+  /* ===== HERO ===== */
+  header{
+    position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    background:
+      radial-gradient(ellipse 80% 60% at 75% 15%, rgba(200,100,60,0.10), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 10% 90%, rgba(47,107,107,0.10), transparent 55%),
+      var(--paper);
+    padding:120px 0 80px;
+    z-index:2;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono';font-size:13px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--accent-deep);margin-bottom:26px;display:flex;align-items:center;gap:12px;
+  }
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--accent)}
+  h1{
+    font-family:'Fraunces';font-weight:400;
+    font-size:clamp(2.6rem,8vw,5.6rem);line-height:0.98;letter-spacing:-0.025em;
+    margin-bottom:8px;
+  }
+  h1 .light{font-style:italic;font-weight:400;color:var(--ink-soft)}
+  h1 .accent{color:var(--accent);font-weight:600}
+  .hero-sub{
+    font-size:clamp(1.15rem,2.4vw,1.5rem);color:var(--ink-soft);max-width:30ch;
+    margin-top:26px;line-height:1.45;
+  }
+  .hero-sub b{font-weight:600;color:var(--ink);background:linear-gradient(transparent 62%, rgba(200,100,60,0.22) 62%)}
+  .hero-cta{display:flex;gap:16px;margin-top:42px;flex-wrap:wrap}
+  .btn{
+    font-family:'JetBrains Mono';font-size:13px;letter-spacing:0.04em;text-transform:uppercase;
+    padding:15px 26px;border-radius:2px;transition:all .25s;display:inline-flex;align-items:center;gap:9px;
+  }
+  .btn-primary{background:var(--ink);color:var(--paper)}
+  .btn-primary:hover{background:var(--accent);transform:translateY(-2px)}
+  .btn-ghost{border:1px solid var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:var(--paper);transform:translateY(-2px)}
+  .btn .arrow{transition:transform .25s}
+  .btn:hover .arrow{transform:translate(3px,-3px)}
+
+  .scroll-hint{
+    position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+    font-family:'JetBrains Mono';font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted-light);
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+  }
+  .scroll-hint .dot{width:1px;height:34px;background:linear-gradient(var(--muted-light),transparent);animation:drop 1.8s infinite}
+  @keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* ===== METRIC STRIP ===== */
+  .metrics{
+    background:var(--ink);color:var(--paper);position:relative;z-index:2;
+    padding:46px 0;
+  }
+  .metrics .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+  .metric .num{font-family:'Fraunces';font-size:clamp(2rem,4vw,3.1rem);font-weight:600;line-height:1;color:var(--paper)}
+  .metric .num span{color:var(--accent)}
+  .metric .lbl{font-family:'JetBrains Mono';font-size:11px;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted-light);margin-top:10px}
+  @media(max-width:680px){.metrics .grid{grid-template-columns:repeat(2,1fr);gap:32px 20px}}
+
+  /* ===== SECTION SHELL ===== */
+  section.block{position:relative;z-index:2;padding:96px 0}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:54px}
+  .sec-num{font-family:'JetBrains Mono';font-size:13px;color:var(--accent-deep);letter-spacing:0.05em}
+  .sec-title{font-family:'Fraunces';font-weight:500;font-size:clamp(1.7rem,4vw,2.6rem);letter-spacing:-0.02em;line-height:1}
+  .sec-rule{flex:1;height:1px;background:var(--line)}
+
+  /* ===== ABOUT ===== */
+  .about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:60px;align-items:start}
+  .about-lead{font-family:'Fraunces';font-size:clamp(1.4rem,3vw,2rem);font-weight:400;line-height:1.3;letter-spacing:-0.01em}
+  .about-lead em{font-style:italic;color:var(--accent-deep)}
+  .about-body{color:var(--muted);font-size:17px;line-height:1.75}
+  .about-body p+p{margin-top:16px}
+  @media(max-width:760px){.about-grid{grid-template-columns:1fr;gap:30px}}
+
+  /* ===== EXPERIENCE ===== */
+  .role{
+    display:grid;grid-template-columns:200px 1fr;gap:40px;
+    padding:38px 0;border-top:1px solid var(--line);
+  }
+  .role:last-child{border-bottom:1px solid var(--line)}
+  .role-meta .period{font-family:'JetBrains Mono';font-size:12px;color:var(--accent-deep);letter-spacing:0.04em}
+  .role-meta .company{font-family:'Fraunces';font-weight:600;font-size:1.25rem;margin-top:6px}
+  .role-meta .tag{display:inline-block;margin-top:12px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(47,107,107,0.3);padding:4px 9px;border-radius:2px}
+  .role-title{font-family:'Fraunces';font-weight:500;font-size:1.2rem;margin-bottom:8px;letter-spacing:-0.01em}
+  .role-stack{font-family:'JetBrains Mono';font-size:11.5px;color:var(--muted-light);margin-bottom:20px;line-height:1.7}
+  .repo-link{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:0.05em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(47,107,107,0.35);padding:6px 12px;border-radius:2px;margin-bottom:18px;transition:all .25s}
+  .repo-link:hover{background:var(--teal);color:var(--paper);border-color:var(--teal);transform:translateY(-2px)}
+  .repo-link .arrow{transition:transform .25s}
+  .repo-link:hover .arrow{transform:translate(2px,-2px)}
+  .bullets{list-style:none}
+  .bullets li{position:relative;padding-left:24px;margin-bottom:13px;font-size:16.5px;color:var(--ink-soft);line-height:1.6}
+  .bullets li::before{content:"";position:absolute;left:0;top:11px;width:7px;height:7px;background:var(--accent);border-radius:50%;opacity:.8}
+  .bullets li b{font-weight:600;color:var(--ink)}
+  @media(max-width:760px){.role{grid-template-columns:1fr;gap:18px;padding:30px 0}}
+
+  /* ===== SKILLS ===== */
+  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .skill-card{
+    background:var(--paper-warm);border:1px solid var(--line);border-radius:4px;padding:24px 26px;
+    transition:transform .3s,box-shadow .3s,border-color .3s;
+  }
+  .skill-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px -18px rgba(14,23,38,0.4);border-color:var(--accent)}
+  .skill-card h4{font-family:'JetBrains Mono';font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-family:'JetBrains Mono';font-size:12.5px;background:var(--paper);border:1px solid var(--line);padding:5px 11px;border-radius:2px;color:var(--ink-soft)}
+  @media(max-width:680px){.skills-grid{grid-template-columns:1fr}}
+
+  /* ===== CERTS ===== */
+  .certs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .cert{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:16px 18px;border:1px solid var(--line);border-radius:3px;background:var(--paper-warm);transition:border-color .25s,transform .25s}
+  .cert:hover{border-color:var(--teal);transform:translateY(-3px)}
+  a.cert{cursor:pointer}
+  a.cert .nm::after{content:" ↗";font-family:'JetBrains Mono';font-size:11px;color:var(--teal);opacity:0;transition:opacity .25s}
+  a.cert:hover .nm::after{opacity:1}
+  .cert .nm{font-weight:600;font-size:15px;line-height:1.3}
+  .cert .dt{font-family:'JetBrains Mono';font-size:11px;color:var(--muted-light);white-space:nowrap}
+  @media(max-width:760px){.certs{grid-template-columns:1fr}}
+
+  /* ===== CONTACT / CTA ===== */
+  .closer{
+    background:var(--ink);color:var(--paper);position:relative;z-index:2;
+    padding:110px 0;text-align:center;overflow:hidden;
+  }
+  .closer::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 60% at 50% 0%,rgba(200,100,60,0.18),transparent 60%);}
+  .closer .inner{position:relative}
+  .closer .eyebrow{justify-content:center;color:var(--accent)}
+  .closer .eyebrow::before{background:var(--accent)}
+  .closer h2{font-family:'Fraunces';font-weight:400;font-size:clamp(2rem,6vw,3.8rem);line-height:1.02;letter-spacing:-0.025em;margin-bottom:18px}
+  .closer h2 em{font-style:italic;color:var(--accent)}
+  .closer p{color:var(--muted-light);max-width:42ch;margin:0 auto 38px;font-size:18px}
+  .closer .contact-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .closer .btn-ghost{border-color:var(--line-light);color:var(--paper)}
+  .closer .btn-ghost:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+
+  footer{background:var(--ink);color:var(--muted-light);padding:26px 0 40px;position:relative;z-index:2;
+    font-family:'JetBrains Mono';font-size:11.5px;letter-spacing:0.04em;
+    display:flex;justify-content:space-between;border-top:1px solid var(--line-light)}
+  footer .wrap{display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:10px}
+  @media(max-width:680px){footer .wrap{flex-direction:column;text-align:center}}
+
+  /* ===== REVEAL ANIM ===== */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .stagger>*{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+  .stagger.in>*{opacity:1;transform:none}
+  .hero-anim{opacity:0;transform:translateY(24px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,.stagger>*,.hero-anim{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 
-<nav>
-  <span class="nav-logo">Hithesh Patel</span>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#certifications">Certs</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+<nav id="nav">
+  <div class="nav-name">Hitesh <b>Patel</b></div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#work">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#certs">Certifications</a>
+    <a href="#contact">Contact</a>
+  </div>
 </nav>
 
-<section id="hero">
-  <div class="hero-wrap">
-    <div class="hero-eyebrow"><span></span>From pipelines to AI agents — I do both.</div>
-    <h1 class="hero-title">Data pipelines.<br>AI workflows.<br><em>Real scale.</em></h1>
-    <p class="hero-sub">I'm a Data Engineer who builds <strong>production-grade pipelines</strong> and <strong>LLM-powered tooling</strong> — one of the few engineers working comfortably across both. Currently at phData, processing billions of records daily and shipping MCP servers used across the org.</p>
-    <div class="stat-row">
-      <div class="stat-item"><div class="stat-num">150+</div><div class="stat-label">dbt models in prod</div></div>
-      <div class="stat-item"><div class="stat-num">Bn+</div><div class="stat-label">records / day</div></div>
-      <div class="stat-item"><div class="stat-num">10×</div><div class="stat-label">faster RCA</div></div>
-      <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">certifications</div></div>
-    </div>
-    <div class="hero-cta">
-      <a href="#projects" class="btn-hero btn-hero-primary">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 12h18M13 6l6 6-6 6"/></svg>
-        See my work
-      </a>
-      <a href="https://github.com/Data-Engineering-MCP" target="_blank" class="btn-hero btn-hero-ghost">
-        <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-        GitHub
-      </a>
-      <a href="mailto:hiteshg1334@gmail.com" class="btn-hero btn-hero-ghost">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Email me
-      </a>
+<!-- HERO -->
+<header>
+  <div class="wrap">
+    <div class="eyebrow hero-anim" style="animation-delay:.05s">Data Engineer · Finance · AI Automation</div>
+    <h1>
+      <span class="hero-anim" style="animation-delay:.15s;display:block">I build the pipelines</span>
+      <span class="hero-anim light" style="animation-delay:.28s;display:block">that enterprises</span>
+      <span class="hero-anim accent" style="animation-delay:.41s;display:block">actually trust.</span>
+    </h1>
+    <p class="hero-sub hero-anim" style="animation-delay:.55s">
+      2+ years turning fragile, monolithic data systems into <b>modular, well-tested</b> platforms — and teaching LLMs to do the boring parts.
+    </p>
+    <div class="hero-cta hero-anim" style="animation-delay:.68s">
+      <a href="#contact" class="btn btn-primary">Get in touch <span class="arrow">↗</span></a>
+      <a href="#work" class="btn btn-ghost">See the work <span class="arrow">↓</span></a>
     </div>
   </div>
-</section>
+  <div class="scroll-hint"><span>Scroll</span><span class="dot"></span></div>
+</header>
 
-<section id="about">
-  <div class="container">
-    <div class="sec-label">Who I am</div>
-    <div class="divider"></div>
-    <h2 class="sec-title">About me</h2>
-    <p class="sec-sub">Data engineer by trade, AI tooling builder by habit.</p>
-    <div class="about-layout">
-      <div class="about-body">
-        <p>I work at phData on enterprise financial data systems — the kind where a bad pipeline decision costs real money and debugging at 2am is just part of the job. Over two years I've learned that scale exposes every shortcut, and I've stopped taking them.</p>
-        <p>What makes my work a little different is that I got deep into AI tooling before it was obvious to do so. I built MCP servers from scratch for JIRA, Slack, and Snowflake — not as a side project, but because I was frustrated with how much context-switching my team was doing. Those servers are now used across multiple teams at phData.</p>
-        <p>I hold 6 certifications across AWS, Snowflake (3 SnowPro), and dbt — earned in under 18 months. I find that staying certified in the tools I use forces me to stay honest about what I actually know versus what I just think I know.</p>
-      </div>
-      <div class="kpi-stack">
-        <div class="kpi"><div class="kpi-num">1–2 days → 1–2 hrs</div><div class="kpi-desc">Pipeline RCA time after building Cortex AI automation scanning full model lineage to source</div></div>
-        <div class="kpi"><div class="kpi-num">Billions / day</div><div class="kpi-desc">Records processed daily across incremental dbt pipelines built for 24hr enterprise finance cadences</div></div>
-        <div class="kpi"><div class="kpi-num">Org-wide adoption</div><div class="kpi-desc">MCP servers adopted across multiple phData teams as standard AI workflow integration layer</div></div>
-        <div class="kpi"><div class="kpi-num">6 certs · 18 months</div><div class="kpi-desc">AWS ×2, Snowflake SnowPro Core + 2 Specialties, dbt Analytics Engineer</div></div>
-      </div>
+<!-- METRICS -->
+<div class="metrics">
+  <div class="wrap">
+    <div class="grid stagger" id="metricGrid">
+      <div class="metric"><div class="num" data-target="150" data-suffix="+">0</div><div class="lbl">dbt models refactored</div></div>
+      <div class="metric"><div class="num"><span>16×</span></div><div class="lbl">faster incident RCA</div></div>
+      <div class="metric"><div class="num" data-target="3" data-suffix="">0</div><div class="lbl">production MCP servers</div></div>
+      <div class="metric"><div class="num" data-target="6" data-suffix="">0</div><div class="lbl">cloud &amp; data certs</div></div>
     </div>
   </div>
-</section>
+</div>
 
-<section id="skills">
-  <div class="container">
-    <div class="sec-label">What I work with</div>
-    <div class="divider"></div>
-    <h2 class="sec-title">Technical skills</h2>
-    <p class="sec-sub">Highlighted tags are what I use most — everything listed is interview-ready.</p>
-    <div class="skill-grid">
-      <div class="skill-box"><h4>Languages</h4><div class="tags"><span class="tag hi">Python</span><span class="tag hi">SQL</span><span class="tag">Java</span><span class="tag">HTML / CSS</span></div></div>
-      <div class="skill-box"><h4>Data & Cloud</h4><div class="tags"><span class="tag hi">Snowflake</span><span class="tag hi">dbt</span><span class="tag hi">AWS</span><span class="tag">Kafka</span><span class="tag">PySpark</span><span class="tag">Databricks</span><span class="tag">Fivetran</span><span class="tag">Flyway</span></div></div>
-      <div class="skill-box"><h4>AI & Automation</h4><div class="tags"><span class="tag hi">MCP</span><span class="tag hi">LLMs</span><span class="tag hi">Snowflake Cortex</span><span class="tag">LangChain</span><span class="tag">Claude Code</span><span class="tag">Cursor</span><span class="tag">NotebookLM</span></div></div>
-      <div class="skill-box"><h4>DevOps & Frameworks</h4><div class="tags"><span class="tag hi">Git</span><span class="tag">GitHub</span><span class="tag">BitBucket</span><span class="tag">JIRA</span><span class="tag">Airflow</span><span class="tag">Streamlit</span><span class="tag">Flask</span></div></div>
-    </div>
-  </div>
-</section>
-
-<section id="projects">
-  <div class="container">
-    <div class="sec-label">What I've built</div>
-    <div class="divider"></div>
-    <h2 class="sec-title">Projects</h2>
-    <p class="sec-sub">Two flagship projects — one AI tooling, one data engineering at scale.</p>
-    <div class="projects-stack">
-      <div class="project featured">
-        <div class="project-top">
-          <div>
-            <div class="project-badges"><span class="badge badge-ai">AI Tooling</span><span class="badge badge-new">Open Source</span></div>
-            <div class="project-title">MCP Servers — JIRA, Slack & Snowflake</div>
-            <div class="project-org">Built at phData · Adopted org-wide · 2025</div>
-          </div>
-          <a href="https://github.com/Data-Engineering-MCP" target="_blank" class="gh-link">
-            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-            View on GitHub
-          </a>
-        </div>
-        <div class="project-impact">
-          <div class="impact-item"><div class="impact-num">3</div><div class="impact-label">Servers built</div></div>
-          <div class="impact-item"><div class="impact-num">Multi-team</div><div class="impact-label">Org adoption</div></div>
-          <div class="impact-item"><div class="impact-num">0</div><div class="impact-label">Destructive ops</div></div>
-          <div class="impact-item"><div class="impact-num">1 loop</div><div class="impact-label">Ticket → PR</div></div>
-        </div>
-        <div class="project-body">
-          <p class="project-desc">Built three production MCP (Model Context Protocol) servers from scratch — for JIRA, Slack, and Snowflake. Core idea: give LLMs structured, controlled access to engineering tools without letting them improvise. Each server exposes purpose-built tools so the model triggers an action, not a reasoning chain.</p>
-          <div class="point-list">
-            <div class="point">Tools designed so the LLM triggers actions — control and logic stay on the engineering side, not in the model's reasoning</div>
-            <div class="point">MCP Resources expose live data (Snowflake schemas, JIRA context, Slack channel lists) as grounded context — not just API calls</div>
-            <div class="point">User-configurable safety hooks block DROP, DELETE, TRUNCATE at the server layer regardless of what the model generates</div>
-            <div class="point">Full engineering loop in one agent session: read ticket → query Snowflake → write code → post Slack update → open PR</div>
-          </div>
-        </div>
-        <div class="project-foot">
-          <div class="tech-row"><span class="tech">Python</span><span class="tech">MCP SDK</span><span class="tech">JIRA API</span><span class="tech">Slack API</span><span class="tech">Snowflake SDK</span></div>
-        </div>
+<!-- ABOUT -->
+<section class="block" id="about">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">01</span><span class="sec-title">The short version</span><span class="sec-rule"></span></div>
+    <div class="about-grid">
+      <div class="about-lead reveal">
+        I'm a data engineer who's happiest when a tangled, fragile system finally becomes something a whole team can build on <em>without second-guessing it.</em>
       </div>
-
-      <div class="project">
-        <div class="project-top">
-          <div>
-            <div class="project-badges"><span class="badge badge-data">Data Engineering</span></div>
-            <div class="project-title">Workday Enterprise Data & Analytics Pipeline</div>
-            <div class="project-org">phData · US Enterprise Finance Client · Jan 2025 – Jan 2026</div>
-          </div>
-        </div>
-        <div class="project-impact">
-          <div class="impact-item"><div class="impact-num">150+</div><div class="impact-label">dbt models</div></div>
-          <div class="impact-item"><div class="impact-num">Bn+</div><div class="impact-label">records / day</div></div>
-          <div class="impact-item"><div class="impact-num">10×</div><div class="impact-label">faster RCA</div></div>
-          <div class="impact-item"><div class="impact-num">SCD 1&2</div><div class="impact-label">snapshot types</div></div>
-        </div>
-        <div class="project-body">
-          <p class="project-desc">Full-lifecycle ownership of an enterprise financial data platform on dbt + Snowflake. From decommissioning a legacy sandbox through architecture, build, refactor, and production deployment — including an AI-powered debugging layer that cut RCA from days to hours.</p>
-          <div class="point-list">
-            <div class="point">dbt mesh splitting a monolith into domain sub-projects (GTM, EM, CX) — 150+ models, each representing one piece of functionality</div>
-            <div class="point">Incremental load strategy for billions of daily records, built around 24-hour enterprise metric refresh cycles</div>
-            <div class="point">Cortex AI RCA scanning full model lineage from failure to source — debug time cut from 1–2 days to 1–2 hours including deployment</div>
-            <div class="point">Owned 5–10 critical CI production incidents end-to-end — dbt version conflicts, env misconfigurations — resolved under pressure</div>
-          </div>
-        </div>
-        <div class="project-foot">
-          <div class="tech-row"><span class="tech">dbt</span><span class="tech">Snowflake</span><span class="tech">Cortex AI</span><span class="tech">Atlan</span><span class="tech">Airflow</span><span class="tech">GitHub</span></div>
-          <span style="font-size:.75rem;color:var(--subtle);font-style:italic">Enterprise · private codebase</span>
-        </div>
+      <div class="about-body reveal">
+        <p>For 2+ years at <b style="color:var(--ink)">phData</b>, I've modernized financial data ecosystems for enterprise clients: building secure, production-grade pipelines on dbt, Snowflake, and Airflow.</p>
+        <p>Lately I've been wiring LLM-powered agents and custom MCP tooling into our engineering workflows — collapsing multi-day investigations into a single prompt, without handing the keys to a black box.</p>
+        <p>I care about clean, maintainable code, proactive communication, and taking full ownership of what I ship.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="experience">
-  <div class="container">
-    <div class="sec-label">Where I've worked</div>
-    <div class="divider"></div>
-    <h2 class="sec-title">Experience</h2>
-    <p class="sec-sub">2 years, one company, deep ownership.</p>
-    <div class="timeline">
-      <div class="titem">
-        <div class="tdot"></div>
-        <div class="trole">Data Engineer</div>
-        <div class="tcompany">phData · Remote</div>
-        <div class="tdate">2024 – Present</div>
-        <div class="tproject">Workday ED&A · 2024 – 2026</div>
-        <ul class="tbullets">
-          <li>Architected dbt mesh across 150+ models — split monolith into GTM, EM, CX domain sub-projects</li>
-          <li>Built incremental pipelines processing billions of daily records with SCD1 & SCD2 snapshots</li>
-          <li>Refactored full codebase — removed hardcoded values, modularised by function, reduced query runtimes</li>
-          <li>Built Cortex AI RCA automation scanning full lineage — debug time cut from 1–2 days to 1–2 hours</li>
-          <li>Owned 5–10 critical CI production incidents end-to-end under pressure</li>
-          <li>Handled ad-hoc business requests without derailing the main roadmap</li>
-          <li>Mentored junior engineers and set code review standards the team still uses</li>
-        </ul>
-        <div class="tproject">MCP Server Development · 2025 - 2026</div>
-        <ul class="tbullets">
-          <li>Built 3 production MCP servers from scratch — JIRA, Slack, Snowflake — now adopted org-wide</li>
-          <li>Designed purpose-built tool interfaces keeping the LLM decision surface minimal</li>
-          <li>Safety hooks block all destructive SQL operations at the server layer</li>
+<!-- EXPERIENCE -->
+<section class="block" id="work" style="padding-top:30px">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">02</span><span class="sec-title">Experience</span><span class="sec-rule"></span></div>
+
+    <div class="role reveal">
+      <div class="role-meta">
+        <div class="period">2024 — Present</div>
+        <div class="company">phData</div>
+        <span class="tag">Finance · Workday (US)</span>
+      </div>
+      <div class="role-detail">
+        <div class="role-title">Workday — Enterprise Data &amp; Analytics Platform Modernization</div>
+        <div class="role-stack">dbt · Snowflake · GitHub · Miro · Jira · SQL · Python · Snowflake Cortex · Claude Code · Cursor · MCP (Jira, Snowflake)</div>
+        <ul class="bullets">
+          <li>Implemented a <b>dbt mesh structure</b>, decomposing a monolithic project into domain-focused sub-projects (GTM, EM, CX) to improve modularity and team autonomy, and contributed to decommissioning a legacy sandbox database.</li>
+          <li>Refactored <b>150+ legacy dbt models</b> into a dimensional (fact/dimension) modeling structure — eliminating hardcoded values, hardening edge-case and record-correction logic, and significantly improving pipeline resilience.</li>
+          <li>Built and deployed production-grade dbt pipelines end-to-end for the EM domain: SCD Type 1 &amp; 2 snapshots, reusable macros, and comprehensive test coverage.</li>
+          <li>Cut root-cause-analysis time for data incidents from <b>1–2 days to 1–3 hours</b> by automating RCA with Snowflake Cortex and custom MCP-driven workflows.</li>
+          <li>Designed and deployed Jira and Snowflake MCP servers, combining them into two AI-assisted workflows: automated RCA and an end-to-end requirement-to-pull-request pipeline.</li>
+          <li>Owned critical production incidents end-to-end — diagnosing under pressure and resolving with minimal downtime while keeping stakeholders informed.</li>
         </ul>
       </div>
-      <div class="titem">
-        <div class="tdot"></div>
-        <div class="trole">B.Tech in Computer Science and Engineering</div>
-        <div class="tcompany">PES University · Bengaluru, India</div>
-        <div class="tdate">2020 – 2024</div>
+    </div>
+
+    <div class="role reveal">
+      <div class="role-meta">
+        <div class="period">2025 — 2026</div>
+        <div class="company">phData</div>
+        <span class="tag">AI Tooling · Automation</span>
+      </div>
+      <div class="role-detail">
+        <div class="role-title">MCP Server Development — Jira, SQL Server &amp; Snowflake</div>
+        <div class="role-stack">Python · MCP SDK · REST APIs</div>
+        <a class="repo-link" href="https://github.com/Data-Engineering-MCP" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          github.com/Data-Engineering-MCP <span class="arrow">↗</span>
+        </a>
+        <ul class="bullets">
+          <li>Built <b>three production MCP servers</b> from scratch (Jira, SQL Server, Snowflake), giving LLMs structured, reliable access to each platform without general-purpose API calls.</li>
+          <li>Designed each server around focused, purpose-built tools (create ticket, post message, describe table) — keeping control and business logic on the engineering side while minimizing the LLM's decision surface.</li>
+          <li>Powered downstream AI workflows including automated root-cause analysis and feature development, reducing multi-tool context-switching to a single prompted interaction.</li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<section id="certifications">
-  <div class="container">
-    <div class="sec-label">Credentials</div>
-    <div class="divider"></div>
-    <h2 class="sec-title">Certifications</h2>
-    <p class="sec-sub">6 certifications earned across AWS, Snowflake, and dbt within 18 months.</p>
-    <div class="certs-grid">
-      <div class="cert"><div class="cert-issuer">Amazon Web Services</div><div class="cert-name">AWS Certified Data Engineer – Associate</div><div class="cert-date">Oct 2025</div></div>
-      <div class="cert"><div class="cert-issuer">Amazon Web Services</div><div class="cert-name">AWS Certified AI Practitioner</div><div class="cert-date">Apr 2025</div></div>
-      <div class="cert"><div class="cert-issuer">Snowflake</div><div class="cert-name">SnowPro Core Certification</div><div class="cert-date">Nov 2024</div></div>
-      <div class="cert"><div class="cert-issuer">Snowflake</div><div class="cert-name">SnowPro Specialty: Snowpark</div><div class="cert-date">2025</div></div>
-      <div class="cert"><div class="cert-issuer">Snowflake</div><div class="cert-name">SnowPro Specialty: Native App</div><div class="cert-date">2025</div></div>
-      <div class="cert"><div class="cert-issuer">dbt Labs</div><div class="cert-name">dbt Analytics Engineer Certification</div><div class="cert-date">May 2026</div></div>
+<!-- SKILLS -->
+<section class="block" id="skills" style="padding-top:30px">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">03</span><span class="sec-title">Toolkit</span><span class="sec-rule"></span></div>
+    <div class="skills-grid stagger">
+      <div class="skill-card"><h4>Data &amp; Cloud</h4><div class="chips"><span class="chip">Snowflake</span><span class="chip">dbt</span><span class="chip">AWS</span><span class="chip">Airflow</span><span class="chip">Fivetran</span><span class="chip">Kafka</span><span class="chip">PySpark</span><span class="chip">Databricks</span><span class="chip">Flyway</span></div></div>
+      <div class="skill-card"><h4>AI &amp; Automation</h4><div class="chips"><span class="chip">LLMs</span><span class="chip">MCP</span><span class="chip">Snowflake Cortex</span><span class="chip">Claude Code</span><span class="chip">Cursor</span></div></div>
+      <div class="skill-card"><h4>Languages</h4><div class="chips"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Java</span><span class="chip">HTML/CSS</span></div></div>
+      <div class="skill-card"><h4>DevOps · CI/CD · Frameworks</h4><div class="chips"><span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">BitBucket</span><span class="chip">Jira</span><span class="chip">Streamlit</span><span class="chip">Flask</span></div></div>
     </div>
   </div>
 </section>
 
-<section id="contact">
-  <div class="container">
-    <div class="sec-label">Get in touch</div>
-    <div class="divider"></div>
-    <h2 class="sec-title">Contact</h2>
-    <p class="sec-sub">Open to roles in data engineering and AI tooling.</p>
-    <div class="contact-grid">
-      <a href="mailto:hiteshg1334@gmail.com" class="clink">
-        <div class="clink-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-        <div><div class="clink-label">Email</div><div class="clink-val">hiteshg1334@gmail.com</div></div>
-      </a>
-      <a href="https://linkedin.com/in/yourprofile" target="_blank" class="clink">
-        <div class="clink-icon"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></div>
-        <div><div class="clink-label">LinkedIn</div><div class="clink-val">linkedin.com/in/hitheshpatel</div></div>
-      </a>
-      <a href="https://github.com/Data-Engineering-MCP" target="_blank" class="clink">
-        <div class="clink-icon"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></div>
-        <div><div class="clink-label">GitHub</div><div class="clink-val">github.com/Data-Engineering-MCP</div></div>
-      </a>
-      <a href="tel:+916363997532" class="clink">
-        <div class="clink-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.93 12 19.79 19.79 0 0 1 1.85 3.4 2 2 0 0 1 3.83 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.98-.98a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-        <div><div class="clink-label">Phone</div><div class="clink-val">+91 63639 97532</div></div>
-      </a>
+<!-- CERTS -->
+<section class="block" id="certs" style="padding-top:30px">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">04</span><span class="sec-title">Certifications</span><span class="sec-rule"></span></div>
+    <div class="certs stagger">
+      <a class="cert" href="https://www.credly.com/badges/e889e399-9fb2-4b11-97e5-be2a27c1a1ee/public_url" target="_blank" rel="noopener"><span class="nm">AWS Data Engineer — Associate</span><span class="dt">Oct 2025</span></a>
+      <a class="cert" href="https://achieve.snowflake.com/840f0f47-fb6e-47d8-a7a8-bf2b164bc20f#acc.unCD8kyL" target="_blank" rel="noopener"><span class="nm">Snowflake SnowPro Core</span><span class="dt">Nov 2024</span></a>
+      <div class="cert"><span class="nm">AWS AI Practitioner</span><span class="dt">Apr 2025</span></div>
+      <a class="cert" href="https://achieve.snowflake.com/6961e478-ea5e-4d00-9029-c9603397830f#acc.7fomhVYP" target="_blank" rel="noopener"><span class="nm">SnowPro Specialty: Snowpark</span><span class="dt">2025</span></a>
+      <a class="cert" href="https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/182573470" target="_blank" rel="noopener"><span class="nm">dbt Analytics Engineer</span><span class="dt">2026</span></a>
+      <a class="cert" href="https://achieve.snowflake.com/ccd217e8-535c-4046-845a-b417cd6dea0d#acc.muFXAVDB" target="_blank" rel="noopener"><span class="nm">SnowPro Specialty: Native App</span><span class="dt">2025</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSER / CONTACT -->
+<section class="closer" id="contact">
+  <div class="wrap inner">
+    <div class="eyebrow reveal">Let's talk</div>
+    <h2 class="reveal">Got a pipeline that needs<br><em>someone who'll own it?</em></h2>
+    <p class="reveal">I'm open to data engineering roles where the problems are real and the data actually matters. Reach out — I read everything.</p>
+    <div class="contact-row reveal">
+      <a href="mailto:hiteshg1334@gmail.com" class="btn btn-primary">hiteshg1334@gmail.com <span class="arrow">↗</span></a>
+      <a href="https://www.linkedin.com/in/hithesh-patel/" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn <span class="arrow">↗</span></a>
+      <a href="tel:+916363997532" class="btn btn-ghost">+91 63639 97532</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <p>Hithesh Patel · Bengaluru, India · Built with HTML & CSS</p>
+  <div class="wrap">
+    <span>© 2026 Hitesh Patel</span>
+    <span>Bengaluru, India · Built with intent.</span>
+  </div>
 </footer>
 
+<script>
+  // nav background on scroll
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
+
+  // reveal on scroll
+  const io=new IntersectionObserver((es)=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:0.15});
+  document.querySelectorAll('.reveal,.stagger').forEach(el=>io.observe(el));
+
+  // stagger children
+  document.querySelectorAll('.stagger').forEach(s=>{
+    [...s.children].forEach((c,i)=>c.style.transitionDelay=(i*0.08)+'s');
+  });
+
+  // count-up metrics
+  const metricGrid=document.getElementById('metricGrid');
+  const counted=new Set();
+  const mio=new IntersectionObserver((es)=>{
+    es.forEach(e=>{
+      if(e.isIntersecting && !counted.has(e.target)){
+        counted.add(e.target);
+        e.target.querySelectorAll('.num[data-target]').forEach(el=>{
+          const target=+el.dataset.target, suffix=el.dataset.suffix||'';
+          let cur=0; const step=Math.max(1,Math.ceil(target/40));
+          const t=setInterval(()=>{cur+=step;if(cur>=target){cur=target;clearInterval(t);}el.textContent=cur+suffix;},22);
+        });
+      }
+    });
+  },{threshold:0.4});
+  mio.observe(metricGrid);
+</script>
 </body>
 </html>

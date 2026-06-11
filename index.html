@@ -96,6 +96,7 @@
   header::after{content:"";position:absolute;inset:auto 0 0 0;height:140px;
     background:linear-gradient(transparent,var(--bg));pointer-events:none}
   .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:48px;align-items:center;width:100%}
+  .hero-grid>*{min-width:0}
   @media(max-width:920px){.hero-grid{grid-template-columns:1fr;gap:40px}}
 
   .status-pill{
@@ -302,7 +303,7 @@
     background-size:auto,44px 44px,44px 44px;
   }
   .closer .sec-tag{color:var(--cyan);background:rgba(34,184,230,0.1);border-color:rgba(34,184,230,0.3)}
-  .closer h2{font-family:'Space Grotesk';font-weight:700;font-size:clamp(1.9rem,5.5vw,3.4rem);line-height:1.04;letter-spacing:-0.03em;margin-bottom:18px}
+  .closer h2{font-family:'Space Grotesk';font-weight:700;font-size:clamp(1.6rem,4vw,2.6rem);line-height:1.15;letter-spacing:-0.02em;margin:0 auto 18px;max-width:24ch}
   .closer h2 em{font-style:normal;background:linear-gradient(92deg,var(--cyan),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
   .closer p{color:var(--muted-2);max-width:46ch;margin:0 auto 36px;font-size:17px}
   .closer .contact-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
@@ -385,8 +386,11 @@
   .mobile-menu a:hover{background:var(--bg);color:var(--ink)}
 
   /* ===== RESPONSIVE HARDENING ===== */
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  .wrap{min-width:0}
   img,svg{max-width:100%;height:auto}
-  .pipeline-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .pipeline-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+  .flow-panel{max-width:100%}
   @media(max-width:840px){
     section.block{padding:72px 0}
   }
@@ -398,6 +402,13 @@
     section.block{padding:60px 0}
     .sec-head{margin-bottom:36px}
     .closer{padding:80px 0}
+    /* center hero content */
+    .hero-grid{text-align:center}
+    .hero-sub{margin-left:auto;margin-right:auto}
+    .hero-cta{justify-content:center}
+    /* center metrics */
+    .metric,.metric:first-child{padding:0 10px;text-align:center}
+    .metric:nth-child(odd){border-left:none;padding:0 10px}
     /* keep diagrams legible: scroll instead of shrink */
     .flow-panel{overflow-x:auto;-webkit-overflow-scrolling:touch}
     .flow-panel svg{min-width:560px}
@@ -619,8 +630,8 @@
             <!-- EM → refactor → marts -->
             <path class="edge" d="M344 100 L 388 100"/>
             <path class="edge-flow" style="animation-delay:.35s" d="M344 100 L 388 100"/>
-            <path class="edge" d="M532 100 L 572 100"/>
-            <path class="edge-flow" style="animation-delay:.7s" d="M532 100 L 572 100"/>
+            <path class="edge" d="M532 100 L 566 100"/>
+            <path class="edge-flow" style="animation-delay:.7s" d="M532 100 L 566 100"/>
 
             <!-- monolith -->
             <rect x="34" y="64" width="116" height="64" rx="10" fill="#fff" stroke="rgba(10,26,47,0.18)" stroke-dasharray="5 4"/>
@@ -643,9 +654,9 @@
             <text x="404" y="124" font-family="IBM Plex Mono" font-size="10" fill="rgba(255,255,255,.7)">SCD 1&amp;2 · macros · tests</text>
 
             <!-- marts -->
-            <rect x="572" y="68" width="84" height="64" rx="10" fill="#fff" stroke="rgba(25,178,122,0.55)"/>
-            <text class="node-title" x="586" y="94">Trusted</text>
-            <text class="node-label" x="586" y="112">EM marts → BI</text>
+            <rect x="566" y="68" width="100" height="64" rx="10" fill="#fff" stroke="rgba(25,178,122,0.55)"/>
+            <text class="node-title" x="580" y="94">Trusted</text>
+            <text class="node-label" x="580" y="112">marts → BI</text>
 
             <!-- DQ RCA loop -->
             <line x1="34" y1="230" x2="654" y2="230" stroke="rgba(10,26,47,0.08)"/>
@@ -806,8 +817,8 @@
 <section class="closer" id="contact">
   <div class="wrap">
     <span class="sec-tag reveal">let's talk</span>
-    <h2 class="reveal">Got a pipeline that needs<br><em>someone who'll own it?</em></h2>
-    <p class="reveal">I'm open to data engineering roles, and to teams building agentic, AI-driven workflows on top of their data. If the problems are real, I'm interested. Reach out. I read everything.</p>
+    <h2 class="reveal">Proven track record of taking <em>end-to-end ownership</em> of complex data pipelines, ensuring reliability and performance.</h2>
+    <p class="reveal">I'm a Data Engineer looking for my next challenge. I want to join a team that is solving real problems, especially through agentic and AI-driven data workflows. If you're building something impactful and need someone who is ready to dive in, reach out. I'd love to hear from you.</p>
     <div class="contact-row reveal">
       <a href="mailto:hiteshg1334@gmail.com" class="btn btn-primary">hiteshg1334@gmail.com <span class="arrow">↗</span></a>
       <a href="https://www.linkedin.com/in/hithesh-patel/" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn <span class="arrow">↗</span></a>

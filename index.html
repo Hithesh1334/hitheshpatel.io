@@ -3,252 +3,544 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hitesh Patel — Data Engineer</title>
-<meta name="description" content="Hitesh Patel — Data Engineer specializing in dbt, Snowflake, and AI-driven automation for enterprise finance.">
+<title>Hitesh Patel | Data Engineer</title>
+<meta name="description" content="Hitesh Patel, Data Engineer specializing in dbt, Snowflake, and AI-driven automation for enterprise finance.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,800&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f8fb">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1422">
+<script>
+  /* set theme before paint to avoid flash */
+  (function(){
+    var t='light';
+    try{
+      t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+    }catch(e){
+      try{t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}catch(_){}
+    }
+    document.documentElement.setAttribute('data-theme',t);
+  })();
+</script>
 <style>
   :root{
-    --ink:#0e1726;
-    --ink-soft:#1b2538;
-    --paper:#f4f1ea;
-    --paper-warm:#ece7db;
-    --accent:#c8643c;       /* terracotta */
-    --accent-deep:#a44e2c;
-    --teal:#2f6b6b;
-    --muted:#6b7384;
-    --muted-light:#9aa1b0;
-    --line:rgba(14,23,38,0.12);
-    --line-light:rgba(244,241,234,0.14);
-    --maxw:1080px;
+    --bg:#f5f8fb;            /* glacier white */
+    --panel:#ffffff;
+    --ink:#0a1a2f;           /* deep navy */
+    --ink-soft:#23344d;
+    --navy:#081427;          /* dark sections */
+    --blue:#0e7ce0;          /* pipeline blue */
+    --blue-deep:#0a5db0;
+    --cyan:#22b8e6;          /* snowmelt cyan */
+    --amber:#f2a019;         /* signal amber */
+    --green:#19b27a;         /* tests-pass green */
+    --muted:#5d6b80;
+    --muted-2:#8b97a8;
+    --line:rgba(10,26,47,0.10);
+    --line-dark:rgba(255,255,255,0.10);
+    --maxw:1120px;
+    --r:10px;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    background:var(--paper);
+    background:var(--bg);
     color:var(--ink);
-    font-family:'Newsreader',Georgia,serif;
-    font-size:18px;
-    line-height:1.6;
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:16.5px;
+    line-height:1.65;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
-  ::selection{background:var(--accent);color:var(--paper)}
+  ::selection{background:var(--blue);color:#fff}
   a{color:inherit;text-decoration:none}
-
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .mono{font-family:'IBM Plex Mono',monospace}
 
-  /* grain + atmosphere */
-  body::before{
-    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:0.035;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* faint engineering grid over light areas */
+  .grid-bg{
+    background-image:
+      linear-gradient(rgba(14,124,224,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14,124,224,0.045) 1px, transparent 1px);
+    background-size:44px 44px;
   }
 
   /* ===== NAV ===== */
   nav{
-    position:fixed;top:0;left:0;right:0;z-index:50;
+    position:fixed;top:0;left:0;right:0;z-index:60;
     display:flex;align-items:center;justify-content:space-between;
-    padding:18px 28px;
-    backdrop-filter:blur(0px);
-    transition:background .4s ease, backdrop-filter .4s ease, padding .4s ease, box-shadow .4s ease;
+    padding:16px 28px;
+    transition:background .35s, box-shadow .35s, padding .35s;
   }
   nav.scrolled{
-    background:rgba(244,241,234,0.82);
-    backdrop-filter:blur(12px) saturate(140%);
-    padding:12px 28px;
+    background:rgba(245,248,251,0.85);
+    backdrop-filter:blur(12px) saturate(150%);
+    padding:11px 28px;
     box-shadow:0 1px 0 var(--line);
   }
-  .nav-name{font-family:'Fraunces';font-weight:600;font-size:18px;letter-spacing:-0.01em}
-  .nav-name b{color:var(--accent)}
-  .nav-links{display:flex;gap:26px;font-family:'JetBrains Mono';font-size:12px;letter-spacing:0.04em;text-transform:uppercase}
-  .nav-links a{position:relative;color:var(--muted);transition:color .25s}
-  .nav-links a:hover{color:var(--ink)}
-  .nav-links a::after{content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0;background:var(--accent);transition:width .3s}
+  .nav-name{font-family:'Space Grotesk';font-weight:700;font-size:17px;letter-spacing:-0.01em;display:flex;align-items:center;gap:9px}
+  .nav-dot{width:9px;height:9px;border-radius:2px;background:var(--blue);box-shadow:0 0 0 3px rgba(14,124,224,0.18)}
+  .nav-links{display:flex;gap:24px;font-family:'IBM Plex Mono';font-size:11.5px;letter-spacing:0.05em;text-transform:uppercase}
+  .nav-links a{color:var(--muted);transition:color .2s;position:relative}
+  .nav-links a:hover{color:var(--blue-deep)}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-5px;height:2px;width:0;background:var(--blue);border-radius:2px;transition:width .25s}
   .nav-links a:hover::after{width:100%}
   @media(max-width:680px){.nav-links{display:none}}
 
   /* ===== HERO ===== */
   header{
-    position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;
-    background:
-      radial-gradient(ellipse 80% 60% at 75% 15%, rgba(200,100,60,0.10), transparent 60%),
-      radial-gradient(ellipse 70% 50% at 10% 90%, rgba(47,107,107,0.10), transparent 55%),
-      var(--paper);
-    padding:120px 0 80px;
-    z-index:2;
+    position:relative;min-height:100vh;
+    display:flex;align-items:center;
+    padding:130px 0 90px;
   }
-  .eyebrow{
-    font-family:'JetBrains Mono';font-size:13px;letter-spacing:0.18em;text-transform:uppercase;
-    color:var(--accent-deep);margin-bottom:26px;display:flex;align-items:center;gap:12px;
+  header::after{content:"";position:absolute;inset:auto 0 0 0;height:140px;
+    background:linear-gradient(transparent,var(--bg));pointer-events:none}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:48px;align-items:center;width:100%}
+  @media(max-width:920px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+
+  .status-pill{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:'IBM Plex Mono';font-size:12px;letter-spacing:0.06em;
+    color:var(--blue-deep);background:rgba(14,124,224,0.08);
+    border:1px solid rgba(14,124,224,0.25);
+    padding:7px 14px;border-radius:100px;margin-bottom:26px;
   }
-  .eyebrow::before{content:"";width:34px;height:1px;background:var(--accent)}
+  .status-pill .pulse{width:8px;height:8px;border-radius:50%;background:var(--green);position:relative}
+  .status-pill .pulse::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--green);opacity:.5;animation:ping 1.8s infinite}
+  @keyframes ping{0%{transform:scale(.6);opacity:.7}80%,100%{transform:scale(1.5);opacity:0}}
+
   h1{
-    font-family:'Fraunces';font-weight:400;
-    font-size:clamp(2.6rem,8vw,5.6rem);line-height:0.98;letter-spacing:-0.025em;
-    margin-bottom:8px;
+    font-family:'Space Grotesk';font-weight:700;
+    font-size:clamp(2.5rem,6.2vw,4.4rem);line-height:1.02;letter-spacing:-0.03em;
   }
-  h1 .light{font-style:italic;font-weight:400;color:var(--ink-soft)}
-  h1 .accent{color:var(--accent);font-weight:600}
+  h1 .raw{color:var(--muted-2);text-decoration:line-through;text-decoration-color:rgba(139,151,168,.55);text-decoration-thickness:3px}
+  h1 .trusted{
+    background:linear-gradient(92deg,var(--blue),var(--cyan));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
   .hero-sub{
-    font-size:clamp(1.15rem,2.4vw,1.5rem);color:var(--ink-soft);max-width:30ch;
-    margin-top:26px;line-height:1.45;
+    font-size:clamp(1.05rem,1.9vw,1.25rem);color:var(--ink-soft);max-width:48ch;
+    margin-top:24px;
   }
-  .hero-sub b{font-weight:600;color:var(--ink);background:linear-gradient(transparent 62%, rgba(200,100,60,0.22) 62%)}
-  .hero-cta{display:flex;gap:16px;margin-top:42px;flex-wrap:wrap}
+  .hero-sub b{font-weight:600;color:var(--ink);border-bottom:2px solid rgba(242,160,25,.6)}
+  .hero-cta{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap}
   .btn{
-    font-family:'JetBrains Mono';font-size:13px;letter-spacing:0.04em;text-transform:uppercase;
-    padding:15px 26px;border-radius:2px;transition:all .25s;display:inline-flex;align-items:center;gap:9px;
+    font-family:'Space Grotesk';font-weight:600;font-size:15px;
+    padding:14px 26px;border-radius:8px;transition:all .22s;
+    display:inline-flex;align-items:center;gap:9px;
   }
-  .btn-primary{background:var(--ink);color:var(--paper)}
-  .btn-primary:hover{background:var(--accent);transform:translateY(-2px)}
-  .btn-ghost{border:1px solid var(--line);color:var(--ink)}
-  .btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:var(--paper);transform:translateY(-2px)}
-  .btn .arrow{transition:transform .25s}
+  .btn-primary{background:var(--blue);color:#fff;box-shadow:0 8px 22px -10px rgba(14,124,224,.65)}
+  .btn-primary:hover{background:var(--blue-deep);transform:translateY(-2px);box-shadow:0 12px 26px -10px rgba(14,124,224,.7)}
+  .btn-ghost{border:1.5px solid var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--blue);color:var(--blue-deep);transform:translateY(-2px)}
+  .btn .arrow{transition:transform .22s}
   .btn:hover .arrow{transform:translate(3px,-3px)}
 
-  .scroll-hint{
-    position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
-    font-family:'JetBrains Mono';font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted-light);
-    display:flex;flex-direction:column;align-items:center;gap:8px;
+  /* ---- hero pipeline diagram (signature) ---- */
+  .pipeline-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 24px 60px -30px rgba(10,26,47,0.28);
+    overflow:hidden;
   }
-  .scroll-hint .dot{width:1px;height:34px;background:linear-gradient(var(--muted-light),transparent);animation:drop 1.8s infinite}
-  @keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+  .pipeline-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 16px;border-bottom:1px solid var(--line);
+    font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted);
+  }
+  .pipeline-head .lights{display:flex;gap:6px}
+  .pipeline-head .lights i{width:9px;height:9px;border-radius:50%;background:var(--line);display:block}
+  .pipeline-head .lights i:nth-child(1){background:#f87171}
+  .pipeline-head .lights i:nth-child(2){background:var(--amber)}
+  .pipeline-head .lights i:nth-child(3){background:var(--green)}
+  .pipeline-svg{display:block;width:100%;height:auto;background:
+    radial-gradient(ellipse 70% 60% at 80% 10%, rgba(34,184,230,0.07), transparent 60%),#fbfdff}
+  .pipeline-foot{
+    display:flex;gap:16px;flex-wrap:wrap;
+    padding:12px 16px;border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono';font-size:11px;color:var(--muted);
+  }
+  .pipeline-foot b{color:var(--green);font-weight:500}
+  .node-label{font-family:'IBM Plex Mono';font-size:10.5px;fill:var(--muted)}
+  .node-title{font-family:'Space Grotesk';font-weight:600;font-size:12.5px;fill:var(--ink)}
+  .edge{fill:none;stroke:rgba(14,124,224,0.28);stroke-width:1.6}
+  .edge-flow{fill:none;stroke:var(--blue);stroke-width:1.6;stroke-dasharray:5 9;animation:flow 1.4s linear infinite}
+  @keyframes flow{to{stroke-dashoffset:-14}}
 
-  /* ===== METRIC STRIP ===== */
+  /* ===== METRICS ===== */
   .metrics{
-    background:var(--ink);color:var(--paper);position:relative;z-index:2;
-    padding:46px 0;
+    background:var(--navy);color:#eaf2fb;position:relative;
+    padding:54px 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size:44px 44px;
   }
-  .metrics .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
-  .metric .num{font-family:'Fraunces';font-size:clamp(2rem,4vw,3.1rem);font-weight:600;line-height:1;color:var(--paper)}
-  .metric .num span{color:var(--accent)}
-  .metric .lbl{font-family:'JetBrains Mono';font-size:11px;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted-light);margin-top:10px}
-  @media(max-width:680px){.metrics .grid{grid-template-columns:repeat(2,1fr);gap:32px 20px}}
+  .metrics .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+  .metric{padding:6px 28px;border-left:1px solid var(--line-dark)}
+  .metric:first-child{border-left:none;padding-left:0}
+  .metric .num{font-family:'Space Grotesk';font-weight:700;font-size:clamp(2rem,4vw,3rem);line-height:1;color:#fff}
+  .metric .num span{color:var(--cyan)}
+  .metric .lbl{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted-2);margin-top:10px}
+  @media(max-width:680px){
+    .metrics .grid{grid-template-columns:repeat(2,1fr);gap:30px 0}
+    .metric{padding:0 20px}
+    .metric:nth-child(odd){border-left:none;padding-left:0}
+  }
 
   /* ===== SECTION SHELL ===== */
-  section.block{position:relative;z-index:2;padding:96px 0}
-  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:54px}
-  .sec-num{font-family:'JetBrains Mono';font-size:13px;color:var(--accent-deep);letter-spacing:0.05em}
-  .sec-title{font-family:'Fraunces';font-weight:500;font-size:clamp(1.7rem,4vw,2.6rem);letter-spacing:-0.02em;line-height:1}
-  .sec-rule{flex:1;height:1px;background:var(--line)}
+  section.block{position:relative;padding:96px 0}
+  .sec-head{margin-bottom:50px}
+  .sec-tag{
+    display:inline-block;font-family:'IBM Plex Mono';font-size:11.5px;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--blue-deep);background:rgba(14,124,224,0.08);border:1px solid rgba(14,124,224,0.22);
+    padding:5px 12px;border-radius:6px;margin-bottom:16px;
+  }
+  .sec-title{font-family:'Space Grotesk';font-weight:700;font-size:clamp(1.7rem,4vw,2.5rem);letter-spacing:-0.025em;line-height:1.05}
 
   /* ===== ABOUT ===== */
-  .about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:60px;align-items:start}
-  .about-lead{font-family:'Fraunces';font-size:clamp(1.4rem,3vw,2rem);font-weight:400;line-height:1.3;letter-spacing:-0.01em}
-  .about-lead em{font-style:italic;color:var(--accent-deep)}
-  .about-body{color:var(--muted);font-size:17px;line-height:1.75}
-  .about-body p+p{margin-top:16px}
-  @media(max-width:760px){.about-grid{grid-template-columns:1fr;gap:30px}}
+  .about-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:56px;align-items:start}
+  .about-lead{font-family:'Space Grotesk';font-size:clamp(1.35rem,2.8vw,1.85rem);font-weight:500;line-height:1.32;letter-spacing:-0.015em}
+  .about-lead em{font-style:normal;color:var(--blue-deep)}
+  .about-body{color:var(--muted);font-size:16px;line-height:1.75}
+  .about-body p+p{margin-top:15px}
+  .about-body b{color:var(--ink);font-weight:600}
+  @media(max-width:760px){.about-grid{grid-template-columns:1fr;gap:28px}}
 
-  /* ===== EXPERIENCE ===== */
-  .role{
-    display:grid;grid-template-columns:200px 1fr;gap:40px;
-    padding:38px 0;border-top:1px solid var(--line);
+  /* ===== EXPERIENCE: model cards ===== */
+  .role-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:34px 36px;margin-bottom:26px;
+    box-shadow:0 14px 40px -28px rgba(10,26,47,0.25);
+    transition:transform .3s, box-shadow .3s, border-color .3s;
   }
-  .role:last-child{border-bottom:1px solid var(--line)}
-  .role-meta .period{font-family:'JetBrains Mono';font-size:12px;color:var(--accent-deep);letter-spacing:0.04em}
-  .role-meta .company{font-family:'Fraunces';font-weight:600;font-size:1.25rem;margin-top:6px}
-  .role-meta .tag{display:inline-block;margin-top:12px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(47,107,107,0.3);padding:4px 9px;border-radius:2px}
-  .role-title{font-family:'Fraunces';font-weight:500;font-size:1.2rem;margin-bottom:8px;letter-spacing:-0.01em}
-  .role-stack{font-family:'JetBrains Mono';font-size:11.5px;color:var(--muted-light);margin-bottom:20px;line-height:1.7}
-  .repo-link{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono';font-size:11px;letter-spacing:0.05em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(47,107,107,0.35);padding:6px 12px;border-radius:2px;margin-bottom:18px;transition:all .25s}
-  .repo-link:hover{background:var(--teal);color:var(--paper);border-color:var(--teal);transform:translateY(-2px)}
-  .repo-link .arrow{transition:transform .25s}
-  .repo-link:hover .arrow{transform:translate(2px,-2px)}
+  .role-card:hover{transform:translateY(-4px);border-color:rgba(14,124,224,0.4);box-shadow:0 22px 50px -28px rgba(10,26,47,0.35)}
+  .role-top{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:6px}
+  .role-co{font-family:'Space Grotesk';font-weight:700;font-size:1.35rem;letter-spacing:-0.01em}
+  .role-co small{font-family:'IBM Plex Mono';font-weight:400;font-size:12px;color:var(--muted);margin-left:10px;letter-spacing:.03em}
+  .badge-prod{
+    font-family:'IBM Plex Mono';font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--green);background:rgba(25,178,122,0.1);border:1px solid rgba(25,178,122,0.35);
+    padding:5px 11px;border-radius:100px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;
+  }
+  .badge-prod::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green)}
+  .role-title{font-family:'Space Grotesk';font-weight:600;font-size:1.12rem;color:var(--ink-soft);margin-bottom:14px}
+  .role-stack{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
+  .stack-chip{font-family:'IBM Plex Mono';font-size:11.5px;color:var(--blue-deep);background:rgba(14,124,224,0.07);border:1px solid rgba(14,124,224,0.18);padding:4px 10px;border-radius:6px}
+  .repo-link{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono';font-size:11.5px;letter-spacing:0.04em;color:#fff;background:var(--ink);padding:8px 15px;border-radius:8px;margin-bottom:20px;transition:all .22s}
+  .repo-link:hover{background:var(--blue);transform:translateY(-2px)}
   .bullets{list-style:none}
-  .bullets li{position:relative;padding-left:24px;margin-bottom:13px;font-size:16.5px;color:var(--ink-soft);line-height:1.6}
-  .bullets li::before{content:"";position:absolute;left:0;top:11px;width:7px;height:7px;background:var(--accent);border-radius:50%;opacity:.8}
-  .bullets li b{font-weight:600;color:var(--ink)}
-  @media(max-width:760px){.role{grid-template-columns:1fr;gap:18px;padding:30px 0}}
+  .bullets li{position:relative;padding-left:26px;margin-bottom:12px;font-size:15.5px;color:var(--ink-soft)}
+  .bullets li::before{
+    content:"▸";position:absolute;left:2px;top:0;color:var(--blue);font-size:14px;
+  }
+  .bullets li b{font-weight:600;color:var(--ink);background:linear-gradient(transparent 64%, rgba(242,160,25,0.3) 64%)}
+  @media(max-width:680px){.role-card{padding:26px 22px}}
+
+  /* ---- details / flow toggle ---- */
+  .view-toggle{
+    display:inline-flex;background:var(--bg);border:1px solid var(--line);
+    border-radius:9px;padding:4px;gap:4px;
+  }
+  .toggle-btn{
+    font-family:'IBM Plex Mono';font-size:11.5px;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--muted);background:transparent;border:none;cursor:pointer;
+    padding:7px 14px;border-radius:6px;transition:all .2s;
+  }
+  .toggle-btn:hover{color:var(--ink)}
+  .toggle-btn.active{background:var(--blue);color:#fff;box-shadow:0 4px 12px -6px rgba(14,124,224,.6)}
+  .role-view{display:none;animation:viewIn .35s ease}
+  .role-view.active{display:block}
+  @keyframes viewIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .flow-panel{
+    background:#fbfdff;border:1px solid var(--line);border-radius:10px;overflow:hidden;
+  }
+  .flow-panel svg{display:block;width:100%;height:auto}
+  .flow-caption{
+    font-family:'IBM Plex Mono';font-size:11px;color:var(--muted);
+    padding:10px 16px;border-top:1px solid var(--line);display:flex;gap:18px;flex-wrap:wrap;
+  }
+  .flow-caption b{color:var(--green);font-weight:500}
+  .flow-caption .amber{color:var(--amber)}
 
   /* ===== SKILLS ===== */
-  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
   .skill-card{
-    background:var(--paper-warm);border:1px solid var(--line);border-radius:4px;padding:24px 26px;
-    transition:transform .3s,box-shadow .3s,border-color .3s;
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px 26px;
+    transition:transform .28s, border-color .28s, box-shadow .28s;
   }
-  .skill-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px -18px rgba(14,23,38,0.4);border-color:var(--accent)}
-  .skill-card h4{font-family:'JetBrains Mono';font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:14px}
+  .skill-card:hover{transform:translateY(-4px);border-color:rgba(14,124,224,0.4);box-shadow:0 16px 36px -24px rgba(10,26,47,0.35)}
+  .skill-card h4{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue-deep);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .skill-card h4::before{content:"";width:18px;height:2px;background:var(--blue);border-radius:2px}
   .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{font-family:'JetBrains Mono';font-size:12.5px;background:var(--paper);border:1px solid var(--line);padding:5px 11px;border-radius:2px;color:var(--ink-soft)}
+  .chip{font-family:'IBM Plex Mono';font-size:12.5px;background:var(--bg);border:1px solid var(--line);padding:5px 11px;border-radius:6px;color:var(--ink-soft);transition:border-color .2s,color .2s}
+  .skill-card:hover .chip{border-color:rgba(14,124,224,0.25)}
   @media(max-width:680px){.skills-grid{grid-template-columns:1fr}}
 
   /* ===== CERTS ===== */
   .certs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .cert{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:16px 18px;border:1px solid var(--line);border-radius:3px;background:var(--paper-warm);transition:border-color .25s,transform .25s}
-  .cert:hover{border-color:var(--teal);transform:translateY(-3px)}
-  a.cert{cursor:pointer}
-  a.cert .nm::after{content:" ↗";font-family:'JetBrains Mono';font-size:11px;color:var(--teal);opacity:0;transition:opacity .25s}
-  a.cert:hover .nm::after{opacity:1}
-  .cert .nm{font-weight:600;font-size:15px;line-height:1.3}
-  .cert .dt{font-family:'JetBrains Mono';font-size:11px;color:var(--muted-light);white-space:nowrap}
-  @media(max-width:760px){.certs{grid-template-columns:1fr}}
-
-  /* ===== CONTACT / CTA ===== */
-  .closer{
-    background:var(--ink);color:var(--paper);position:relative;z-index:2;
-    padding:110px 0;text-align:center;overflow:hidden;
+  .cert{
+    display:flex;flex-direction:column;gap:8px;padding:20px 20px 18px;
+    border:1px solid var(--line);border-radius:12px;background:var(--panel);
+    transition:border-color .25s, transform .25s, box-shadow .25s;position:relative;
   }
-  .closer::before{content:"";position:absolute;inset:0;
-    background:radial-gradient(ellipse 60% 60% at 50% 0%,rgba(200,100,60,0.18),transparent 60%);}
-  .closer .inner{position:relative}
-  .closer .eyebrow{justify-content:center;color:var(--accent)}
-  .closer .eyebrow::before{background:var(--accent)}
-  .closer h2{font-family:'Fraunces';font-weight:400;font-size:clamp(2rem,6vw,3.8rem);line-height:1.02;letter-spacing:-0.025em;margin-bottom:18px}
-  .closer h2 em{font-style:italic;color:var(--accent)}
-  .closer p{color:var(--muted-light);max-width:42ch;margin:0 auto 38px;font-size:18px}
-  .closer .contact-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-  .closer .btn-ghost{border-color:var(--line-light);color:var(--paper)}
-  .closer .btn-ghost:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+  .cert:hover{border-color:var(--blue);transform:translateY(-3px);box-shadow:0 14px 30px -22px rgba(10,26,47,0.4)}
+  a.cert::after{content:"↗";position:absolute;top:14px;right:16px;font-family:'IBM Plex Mono';font-size:13px;color:var(--blue);opacity:0;transition:opacity .25s}
+  a.cert:hover::after{opacity:1}
+  .cert .nm{font-family:'Space Grotesk';font-weight:600;font-size:15px;line-height:1.3;padding-right:18px}
+  .cert .dt{font-family:'IBM Plex Mono';font-size:11px;color:var(--muted-2)}
+  @media(max-width:760px){.certs{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.certs{grid-template-columns:1fr}}
 
-  footer{background:var(--ink);color:var(--muted-light);padding:26px 0 40px;position:relative;z-index:2;
-    font-family:'JetBrains Mono';font-size:11.5px;letter-spacing:0.04em;
-    display:flex;justify-content:space-between;border-top:1px solid var(--line-light)}
-  footer .wrap{display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:10px}
+  /* ===== CLOSER ===== */
+  .closer{
+    background:var(--navy);color:#eaf2fb;position:relative;
+    padding:110px 0;text-align:center;overflow:hidden;
+    background-image:
+      radial-gradient(ellipse 55% 55% at 50% 0%, rgba(14,124,224,0.22), transparent 65%),
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size:auto,44px 44px,44px 44px;
+  }
+  .closer .sec-tag{color:var(--cyan);background:rgba(34,184,230,0.1);border-color:rgba(34,184,230,0.3)}
+  .closer h2{font-family:'Space Grotesk';font-weight:700;font-size:clamp(1.9rem,5.5vw,3.4rem);line-height:1.04;letter-spacing:-0.03em;margin-bottom:18px}
+  .closer h2 em{font-style:normal;background:linear-gradient(92deg,var(--cyan),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .closer p{color:var(--muted-2);max-width:46ch;margin:0 auto 36px;font-size:17px}
+  .closer .contact-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .closer .btn-primary{background:var(--cyan);color:var(--navy);box-shadow:0 10px 26px -10px rgba(34,184,230,.5)}
+  .closer .btn-primary:hover{background:#fff;color:var(--navy)}
+  .closer .btn-ghost{border-color:var(--line-dark);color:#eaf2fb}
+  .closer .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+
+  footer{background:var(--navy);color:var(--muted-2);padding:24px 0 40px;
+    font-family:'IBM Plex Mono';font-size:11.5px;letter-spacing:0.04em;border-top:1px solid var(--line-dark)}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
   @media(max-width:680px){footer .wrap{flex-direction:column;text-align:center}}
 
+  /* ===== DARK THEME ===== */
+  html[data-theme="dark"]{
+    --bg:#0b1422;
+    --panel:#112034;
+    --ink:#e9f0f9;
+    --ink-soft:#c6d3e2;
+    --navy:#070f1d;
+    --muted:#9aa9bd;
+    --muted-2:#71819a;
+    --line:rgba(233,240,249,0.12);
+    color-scheme:dark;
+  }
+  html[data-theme="dark"] nav.scrolled{background:rgba(11,20,34,0.85)}
+  html[data-theme="dark"] .grid-bg{
+    background-image:
+      linear-gradient(rgba(34,184,230,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,184,230,0.05) 1px, transparent 1px);
+  }
+  html[data-theme="dark"] .pipeline-svg{background:
+    radial-gradient(ellipse 70% 60% at 80% 10%, rgba(34,184,230,0.08), transparent 60%),#0d1a2c}
+  html[data-theme="dark"] .flow-panel{background:#0d1a2c}
+  html[data-theme="dark"] svg rect[fill="#fff"]{fill:#16273e}
+  html[data-theme="dark"] svg rect[fill="#081427"]{fill:#1d4068}
+  html[data-theme="dark"] svg text[fill="#5d6b80"]{fill:#9aa9bd}
+  html[data-theme="dark"] svg rect[stroke^="rgba(10,26,47"]{stroke:rgba(233,240,249,0.2)}
+  html[data-theme="dark"] svg line[stroke^="rgba(10,26,47"]{stroke:rgba(233,240,249,0.1)}
+  html[data-theme="dark"] .repo-link{background:#1d4068;color:#eaf2fb}
+  html[data-theme="dark"] .repo-link:hover{background:var(--blue)}
+  html[data-theme="dark"] .role-card,
+  html[data-theme="dark"] .skill-card,
+  html[data-theme="dark"] .cert,
+  html[data-theme="dark"] .pipeline-card{box-shadow:0 22px 50px -30px rgba(0,0,0,0.65)}
+  html[data-theme="dark"] .btn-ghost{border-color:var(--line)}
+  html[data-theme="dark"] ::selection{background:var(--cyan);color:var(--navy)}
+  html[data-theme="dark"] .status-pill,
+  html[data-theme="dark"] .sec-tag{color:var(--cyan);background:rgba(34,184,230,0.1);border-color:rgba(34,184,230,0.3)}
+  html[data-theme="dark"] .nav-links a:hover{color:var(--cyan)}
+  html[data-theme="dark"] .stack-chip{color:#7cc4f5;background:rgba(14,124,224,0.12);border-color:rgba(124,196,245,0.25)}
+  html[data-theme="dark"] .skill-card h4{color:var(--cyan)}
+  html[data-theme="dark"] .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+  html[data-theme="dark"] .about-lead em{color:var(--cyan)}
+
+  /* ===== NAV CONTROLS (theme + mobile menu) ===== */
+  .nav-right{display:flex;align-items:center;gap:16px}
+  .icon-btn{
+    width:38px;height:38px;border-radius:9px;flex:0 0 auto;
+    border:1px solid var(--line);background:var(--panel);color:var(--ink);
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:border-color .2s, color .2s, transform .2s;
+  }
+  .icon-btn:hover{border-color:var(--blue);color:var(--blue-deep);transform:translateY(-1px)}
+  html[data-theme="dark"] .icon-btn:hover{color:var(--cyan)}
+  .menu-btn{display:none}
+  @media(max-width:680px){.menu-btn{display:flex}}
+  .mobile-menu{
+    position:fixed;top:64px;left:14px;right:14px;z-index:55;
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 24px 50px -24px rgba(0,0,0,0.35);
+    display:none;flex-direction:column;padding:8px;
+  }
+  .mobile-menu.open{display:flex}
+  .mobile-menu a{
+    padding:13px 14px;border-radius:9px;
+    font-family:'IBM Plex Mono';font-size:12px;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--muted);transition:background .2s,color .2s;
+  }
+  .mobile-menu a:hover{background:var(--bg);color:var(--ink)}
+
+  /* ===== RESPONSIVE HARDENING ===== */
+  img,svg{max-width:100%;height:auto}
+  .pipeline-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  @media(max-width:840px){
+    section.block{padding:72px 0}
+  }
+  @media(max-width:680px){
+    body{font-size:16px}
+    .wrap{padding:0 20px}
+    nav,nav.scrolled{padding-left:20px;padding-right:20px}
+    header{padding:108px 0 70px;min-height:auto}
+    section.block{padding:60px 0}
+    .sec-head{margin-bottom:36px}
+    .closer{padding:80px 0}
+    /* keep diagrams legible: scroll instead of shrink */
+    .flow-panel{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .flow-panel svg{min-width:560px}
+    .pipeline-scroll svg{min-width:470px}
+  }
+  @media(max-width:420px){
+    .hero-cta .btn,.contact-row .btn{width:100%;justify-content:center}
+    .role-top{flex-direction:column;gap:10px}
+    .view-toggle{width:100%;justify-content:stretch}
+    .toggle-btn{flex:1;text-align:center}
+  }
+
   /* ===== REVEAL ANIM ===== */
-  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .75s cubic-bezier(.2,.7,.2,1),transform .75s cubic-bezier(.2,.7,.2,1)}
   .reveal.in{opacity:1;transform:none}
-  .stagger>*{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+  .stagger>*{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
   .stagger.in>*{opacity:1;transform:none}
-  .hero-anim{opacity:0;transform:translateY(24px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
+  .hero-anim{opacity:0;transform:translateY(22px);animation:rise .85s cubic-bezier(.2,.7,.2,1) forwards}
   @keyframes rise{to{opacity:1;transform:none}}
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,.stagger>*,.hero-anim{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal,.stagger>*,.hero-anim{opacity:1;transform:none}
+  }
+  :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
 </style>
 </head>
 <body>
 
 <nav id="nav">
-  <div class="nav-name">Hitesh <b>Patel</b></div>
-  <div class="nav-links">
-    <a href="#about">About</a>
-    <a href="#work">Experience</a>
-    <a href="#skills">Skills</a>
-    <a href="#certs">Certifications</a>
-    <a href="#contact">Contact</a>
+  <a class="nav-name" href="#top"><span class="nav-dot"></span>Hitesh Patel</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#work">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#certs">Certifications</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="icon-btn" id="themeBtn" aria-label="Switch to dark mode" title="Toggle dark mode"></button>
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" title="Menu">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    </button>
   </div>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about">About</a>
+  <a href="#work">Experience</a>
+  <a href="#skills">Skills</a>
+  <a href="#certs">Certifications</a>
+  <a href="#contact">Contact</a>
+</div>
 
 <!-- HERO -->
-<header>
-  <div class="wrap">
-    <div class="eyebrow hero-anim" style="animation-delay:.05s">Data Engineer · Finance · AI Automation</div>
-    <h1>
-      <span class="hero-anim" style="animation-delay:.15s;display:block">I build the pipelines</span>
-      <span class="hero-anim light" style="animation-delay:.28s;display:block">that enterprises</span>
-      <span class="hero-anim accent" style="animation-delay:.41s;display:block">actually trust.</span>
-    </h1>
-    <p class="hero-sub hero-anim" style="animation-delay:.55s">
-      2+ years turning fragile, monolithic data systems into <b>modular, well-tested</b> platforms — and teaching LLMs to do the boring parts.
-    </p>
-    <div class="hero-cta hero-anim" style="animation-delay:.68s">
-      <a href="#contact" class="btn btn-primary">Get in touch <span class="arrow">↗</span></a>
-      <a href="#work" class="btn btn-ghost">See the work <span class="arrow">↓</span></a>
+<header id="top" class="grid-bg">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="status-pill hero-anim" style="animation-delay:.05s"><span class="pulse"></span>open to data &amp; AI engineering roles</div>
+      <h1>
+        <span class="hero-anim" style="display:block;animation-delay:.15s"><span class="raw">Raw, fragile data</span></span>
+        <span class="hero-anim" style="display:block;animation-delay:.3s">in. <span class="trusted">Trusted pipelines</span> out.</span>
+      </h1>
+      <p class="hero-sub hero-anim" style="animation-delay:.45s">
+        I'm a data engineer with 2+ years modernizing enterprise finance data on <b>dbt, Snowflake &amp; Airflow</b>, and wiring LLM agents into the workflow so the boring parts run themselves.
+      </p>
+      <div class="hero-cta hero-anim" style="animation-delay:.58s">
+        <a href="#contact" class="btn btn-primary">Get in touch <span class="arrow">↗</span></a>
+        <a href="#work" class="btn btn-ghost">See the work <span class="arrow">↓</span></a>
+      </div>
+    </div>
+
+    <!-- signature: live pipeline DAG -->
+    <div class="hero-anim" style="animation-delay:.5s">
+      <div class="pipeline-card" aria-label="Illustration of a data pipeline from raw sources to trusted dashboards">
+        <div class="pipeline-head">
+          <span class="lights"><i></i><i></i><i></i></span>
+          <span>dbt run --select trusted_marts</span>
+        </div>
+        <div class="pipeline-scroll">
+        <svg class="pipeline-svg" viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg" role="img">
+          <!-- edges -->
+          <path class="edge" d="M118 70 C 170 70, 180 100, 232 110"/>
+          <path class="edge-flow" d="M118 70 C 170 70, 180 100, 232 110"/>
+          <path class="edge" d="M118 150 C 165 150, 185 125, 232 122"/>
+          <path class="edge-flow" style="animation-delay:.4s" d="M118 150 C 165 150, 185 125, 232 122"/>
+          <path class="edge" d="M118 230 C 170 230, 180 145, 232 130"/>
+          <path class="edge-flow" style="animation-delay:.8s" d="M118 230 C 170 230, 180 145, 232 130"/>
+          <path class="edge" d="M340 105 C 380 95, 390 75, 424 70"/>
+          <path class="edge-flow" style="animation-delay:.2s" d="M340 105 C 380 95, 390 75, 424 70"/>
+          <path class="edge" d="M340 125 C 380 135, 390 155, 424 160"/>
+          <path class="edge-flow" style="animation-delay:.6s" d="M340 125 C 380 135, 390 155, 424 160"/>
+          <path class="edge" d="M340 132 C 378 160, 388 230, 424 248"/>
+          <path class="edge-flow" style="animation-delay:1s" d="M340 132 C 378 160, 388 230, 424 248"/>
+
+          <!-- source nodes -->
+          <g>
+            <rect x="28" y="46" width="90" height="46" rx="9" fill="#fff" stroke="rgba(10,26,47,0.14)"/>
+            <text class="node-title" x="44" y="66">ERP</text>
+            <text class="node-label" x="44" y="82">raw.finance</text>
+          </g>
+          <g>
+            <rect x="28" y="126" width="90" height="46" rx="9" fill="#fff" stroke="rgba(10,26,47,0.14)"/>
+            <text class="node-title" x="44" y="146">CRM</text>
+            <text class="node-label" x="44" y="162">raw.gtm</text>
+          </g>
+          <g>
+            <rect x="28" y="206" width="90" height="46" rx="9" fill="#fff" stroke="rgba(10,26,47,0.14)"/>
+            <text class="node-title" x="44" y="226">Events</text>
+            <text class="node-label" x="44" y="242">raw.cx</text>
+          </g>
+
+          <!-- transform node -->
+          <g>
+            <rect x="232" y="88" width="108" height="60" rx="10" fill="#0e7ce0" />
+            <text x="250" y="113" font-family="Space Grotesk" font-weight="600" font-size="13.5" fill="#fff">dbt models</text>
+            <text x="250" y="131" font-family="IBM Plex Mono" font-size="10" fill="rgba(255,255,255,.75)">tests ✓ · SCD2 ✓</text>
+          </g>
+
+          <!-- output nodes -->
+          <g>
+            <rect x="424" y="46" width="84" height="46" rx="9" fill="#fff" stroke="rgba(25,178,122,0.5)"/>
+            <text class="node-title" x="438" y="66">Facts</text>
+            <text class="node-label" x="438" y="82">marts.em</text>
+          </g>
+          <g>
+            <rect x="424" y="136" width="84" height="46" rx="9" fill="#fff" stroke="rgba(25,178,122,0.5)"/>
+            <text class="node-title" x="438" y="156">Dims</text>
+            <text class="node-label" x="438" y="172">marts.gtm</text>
+          </g>
+          <g>
+            <rect x="424" y="224" width="84" height="46" rx="9" fill="#fff" stroke="rgba(25,178,122,0.5)"/>
+            <text class="node-title" x="438" y="244">BI</text>
+            <text class="node-label" x="438" y="260">dashboards</text>
+          </g>
+        </svg>
+        </div>
+        <div class="pipeline-foot">
+          <span><b>✓ 150+ models</b> refactored</span>
+          <span><b>✓ tests</b> passing</span>
+          <span><b>✓ RCA</b> automated via MCP</span>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="scroll-hint"><span>Scroll</span><span class="dot"></span></div>
 </header>
 
 <!-- METRICS -->
@@ -266,14 +558,17 @@
 <!-- ABOUT -->
 <section class="block" id="about">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="sec-num">01</span><span class="sec-title">The short version</span><span class="sec-rule"></span></div>
+    <div class="sec-head reveal">
+      <span class="sec-tag">about</span>
+      <h2 class="sec-title">The short version</h2>
+    </div>
     <div class="about-grid">
       <div class="about-lead reveal">
-        I'm a data engineer who's happiest when a tangled, fragile system finally becomes something a whole team can build on <em>without second-guessing it.</em>
+        Most of my work starts the same way: a data system that's broken or brittle, and needs to be rebuilt to be scalable, modular, and maintainable. <em>That rebuild is my job.</em>
       </div>
       <div class="about-body reveal">
-        <p>For 2+ years at <b style="color:var(--ink)">phData</b>, I've modernized financial data ecosystems for enterprise clients: building secure, production-grade pipelines on dbt, Snowflake, and Airflow.</p>
-        <p>Lately I've been wiring LLM-powered agents and custom MCP tooling into our engineering workflows — collapsing multi-day investigations into a single prompt, without handing the keys to a black box.</p>
+        <p>For 2+ years at <b>phData</b>, I've modernized financial data ecosystems for enterprise clients: building secure, production-grade pipelines on dbt, Snowflake, and Airflow.</p>
+        <p>Lately I've been wiring LLM-powered agents and custom MCP tooling into our engineering workflows, collapsing multi-day investigations into a single prompt, without handing the keys to a black box.</p>
         <p>I care about clean, maintainable code, proactive communication, and taking full ownership of what I ship.</p>
       </div>
     </div>
@@ -281,57 +576,205 @@
 </section>
 
 <!-- EXPERIENCE -->
-<section class="block" id="work" style="padding-top:30px">
+<section class="block grid-bg" id="work" style="padding-top:40px">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="sec-num">02</span><span class="sec-title">Experience</span><span class="sec-rule"></span></div>
+    <div class="sec-head reveal">
+      <span class="sec-tag">experience</span>
+      <h2 class="sec-title">Where I've shipped</h2>
+    </div>
 
-    <div class="role reveal">
-      <div class="role-meta">
-        <div class="period">2024 — Present</div>
-        <div class="company">phData</div>
-        <span class="tag">Finance · Workday (US)</span>
+    <div class="role-card reveal">
+      <div class="role-top">
+        <div class="role-co">phData <small>2024 - Present · Finance · Workday (US)</small></div>
+        <span class="badge-prod">in production</span>
       </div>
-      <div class="role-detail">
-        <div class="role-title">Workday — Enterprise Data &amp; Analytics Platform Modernization</div>
-        <div class="role-stack">dbt · Snowflake · GitHub · Miro · Jira · SQL · Python · Snowflake Cortex · Claude Code · Cursor · MCP (Jira, Snowflake)</div>
-        <ul class="bullets">
-          <li>Implemented a <b>dbt mesh structure</b>, decomposing a monolithic project into domain-focused sub-projects (GTM, EM, CX) to improve modularity and team autonomy, and contributed to decommissioning a legacy sandbox database.</li>
-          <li>Refactored <b>150+ legacy dbt models</b> into a dimensional (fact/dimension) modeling structure — eliminating hardcoded values, hardening edge-case and record-correction logic, and significantly improving pipeline resilience.</li>
-          <li>Built and deployed production-grade dbt pipelines end-to-end for the EM domain: SCD Type 1 &amp; 2 snapshots, reusable macros, and comprehensive test coverage.</li>
-          <li>Cut root-cause-analysis time for data incidents from <b>1–2 days to 1–3 hours</b> by automating RCA with Snowflake Cortex and custom MCP-driven workflows.</li>
-          <li>Designed and deployed Jira and Snowflake MCP servers, combining them into two AI-assisted workflows: automated RCA and an end-to-end requirement-to-pull-request pipeline.</li>
-          <li>Owned critical production incidents end-to-end — diagnosing under pressure and resolving with minimal downtime while keeping stakeholders informed.</li>
-        </ul>
+      <div class="role-title">Workday: Enterprise Data &amp; Analytics Platform Modernization</div>
+      <div class="role-stack">
+        <span class="stack-chip">dbt</span><span class="stack-chip">Snowflake</span><span class="stack-chip">SQL</span><span class="stack-chip">Python</span><span class="stack-chip">Snowflake Cortex</span><span class="stack-chip">Claude Code</span><span class="stack-chip">Cursor</span><span class="stack-chip">MCP</span><span class="stack-chip">GitHub</span><span class="stack-chip">Jira</span>
+      </div>
+      <div class="view-toggle" role="tablist" aria-label="Switch between project details and flow diagram" style="margin-bottom:20px">
+        <button class="toggle-btn active" data-card="c1" data-view="details" role="tab" aria-selected="true">Details</button>
+        <button class="toggle-btn" data-card="c1" data-view="flow" role="tab" aria-selected="false">Flow diagram</button>
+      </div>
+
+      <div class="role-view active" id="c1-details">
+      <ul class="bullets">
+        <li>Implemented a <b>dbt mesh structure</b>, decomposing a monolithic project into domain-focused sub-projects (GTM, EM, CX) to improve modularity and team autonomy, and contributed to decommissioning a legacy sandbox database.</li>
+        <li>Refactored <b>150+ legacy dbt models</b> into a dimensional (fact/dimension) modeling structure, eliminating hardcoded values, hardening edge-case and record-correction logic, and significantly improving pipeline resilience.</li>
+        <li>Built and deployed production-grade dbt pipelines end-to-end for the EM domain: SCD Type 1 &amp; 2 snapshots, reusable macros, and comprehensive test coverage.</li>
+        <li>Cut root-cause-analysis time for <b>data quality test failures from 1–2 days to 1–3 hours</b> by automatically tracing data mismatches to their source and proposing fixes using Snowflake Cortex and custom MCP-driven workflows.</li>
+        <li>Designed and deployed Jira and Snowflake MCP servers, combining them into two AI-assisted workflows: automated RCA and an end-to-end requirement-to-pull-request pipeline.</li>
+        <li>Owned critical production incidents end-to-end, diagnosing under pressure and resolving with minimal downtime while keeping stakeholders informed.</li>
+      </ul>
+      </div>
+
+      <div class="role-view" id="c1-flow">
+        <div class="flow-panel">
+          <svg viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flow of the Workday platform modernization: monolithic dbt project split into GTM, EM and CX domains; the EM domain refactored into dimensional fact and dim models feeding trusted marts; plus an AI-assisted data quality RCA loop">
+            <!-- monolith → domain split -->
+            <path class="edge" d="M150 90 C 188 90, 192 60, 228 56"/>
+            <path class="edge" d="M150 96 C 192 96, 192 96, 228 100"/>
+            <path class="edge-flow" d="M150 96 C 192 96, 192 96, 228 100"/>
+            <path class="edge" d="M150 102 C 188 102, 192 132, 228 144"/>
+            <!-- EM → refactor → marts -->
+            <path class="edge" d="M344 100 L 388 100"/>
+            <path class="edge-flow" style="animation-delay:.35s" d="M344 100 L 388 100"/>
+            <path class="edge" d="M532 100 L 572 100"/>
+            <path class="edge-flow" style="animation-delay:.7s" d="M532 100 L 572 100"/>
+
+            <!-- monolith -->
+            <rect x="34" y="64" width="116" height="64" rx="10" fill="#fff" stroke="rgba(10,26,47,0.18)" stroke-dasharray="5 4"/>
+            <text class="node-title" x="50" y="92">Monolithic</text>
+            <text class="node-label" x="50" y="110">legacy dbt project</text>
+
+            <!-- domain split: GTM / CX are just the split, EM is where the work happened -->
+            <rect x="228" y="36" width="116" height="40" rx="9" fill="#fff" stroke="rgba(10,26,47,0.16)"/>
+            <text class="node-title" x="244" y="61" fill="#5d6b80">GTM domain</text>
+            <rect x="228" y="80" width="116" height="40" rx="9" fill="#0e7ce0"/>
+            <text x="244" y="105" font-family="Space Grotesk" font-weight="600" font-size="13" fill="#fff">EM domain ★</text>
+            <rect x="228" y="124" width="116" height="40" rx="9" fill="#fff" stroke="rgba(10,26,47,0.16)"/>
+            <text class="node-title" x="244" y="149" fill="#5d6b80">CX domain</text>
+            <text class="node-label" x="228" y="186">dbt mesh split · EM = Enterprise Metrics (my focus)</text>
+
+            <!-- dim/fact refactor -->
+            <rect x="388" y="68" width="144" height="64" rx="10" fill="#081427"/>
+            <text x="404" y="92" font-family="Space Grotesk" font-weight="600" font-size="13" fill="#fff">Dim/Fact refactor</text>
+            <text x="404" y="110" font-family="IBM Plex Mono" font-size="10" fill="rgba(255,255,255,.7)">150+ dbt models</text>
+            <text x="404" y="124" font-family="IBM Plex Mono" font-size="10" fill="rgba(255,255,255,.7)">SCD 1&amp;2 · macros · tests</text>
+
+            <!-- marts -->
+            <rect x="572" y="68" width="84" height="64" rx="10" fill="#fff" stroke="rgba(25,178,122,0.55)"/>
+            <text class="node-title" x="586" y="94">Trusted</text>
+            <text class="node-label" x="586" y="112">EM marts → BI</text>
+
+            <!-- DQ RCA loop -->
+            <line x1="34" y1="230" x2="654" y2="230" stroke="rgba(10,26,47,0.08)"/>
+            <text class="node-label" x="34" y="222">AI-assisted data quality loop</text>
+
+            <path class="edge" d="M174 290 C 206 290, 212 290, 240 290"/>
+            <path class="edge-flow" style="animation-delay:.1s" d="M174 290 C 206 290, 212 290, 240 290"/>
+            <path class="edge" d="M394 290 C 424 290, 432 290, 458 290"/>
+            <path class="edge-flow" style="animation-delay:.5s" d="M394 290 C 424 290, 432 290, 458 290"/>
+
+            <rect x="34" y="262" width="140" height="56" rx="10" fill="#fff" stroke="rgba(242,160,25,0.6)"/>
+            <text class="node-title" x="50" y="287">DQ test fails</text>
+            <text class="node-label" x="50" y="305">data mismatch found</text>
+
+            <rect x="240" y="262" width="154" height="56" rx="10" fill="#081427"/>
+            <text x="256" y="287" font-family="Space Grotesk" font-weight="600" font-size="13" fill="#fff">Cortex + MCP RCA</text>
+            <text x="256" y="305" font-family="IBM Plex Mono" font-size="10" fill="rgba(255,255,255,.7)">trace mismatch to source</text>
+
+            <rect x="458" y="262" width="196" height="56" rx="10" fill="#fff" stroke="rgba(25,178,122,0.55)"/>
+            <text class="node-title" x="474" y="287">Root cause + fix in 1–3 hrs</text>
+            <text class="node-label" x="474" y="305">previously 1–2 days</text>
+          </svg>
+          <div class="flow-caption">
+            <span><b>✓</b> monolith → GTM · EM · CX split</span>
+            <span><b>✓</b> EM refactor: dim/fact, 150+ models</span>
+            <span><span class="amber">▲</span> DQ root-cause: 16× faster</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="role reveal">
-      <div class="role-meta">
-        <div class="period">2025 — 2026</div>
-        <div class="company">phData</div>
-        <span class="tag">AI Tooling · Automation</span>
+    <div class="role-card reveal">
+      <div class="role-top">
+        <div class="role-co">phData <small>2025 - 2026 · AI Tooling · Automation</small></div>
+        <span class="badge-prod">in production</span>
       </div>
-      <div class="role-detail">
-        <div class="role-title">MCP Server Development — Jira, SQL Server &amp; Snowflake</div>
-        <div class="role-stack">Python · MCP SDK · REST APIs</div>
-        <a class="repo-link" href="https://github.com/Data-Engineering-MCP" target="_blank" rel="noopener">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-          github.com/Data-Engineering-MCP <span class="arrow">↗</span>
-        </a>
-        <ul class="bullets">
-          <li>Built <b>three production MCP servers</b> from scratch (Jira, SQL Server, Snowflake), giving LLMs structured, reliable access to each platform without general-purpose API calls.</li>
-          <li>Designed each server around focused, purpose-built tools (create ticket, post message, describe table) — keeping control and business logic on the engineering side while minimizing the LLM's decision surface.</li>
-          <li>Powered downstream AI workflows including automated root-cause analysis and feature development, reducing multi-tool context-switching to a single prompted interaction.</li>
-        </ul>
+      <div class="role-title">MCP Server Development: Jira, SQL Server &amp; Snowflake</div>
+      <div class="role-stack">
+        <span class="stack-chip">Python</span><span class="stack-chip">MCP SDK</span><span class="stack-chip">REST APIs</span>
+      </div>
+      <a class="repo-link" href="https://github.com/Data-Engineering-MCP" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        github.com/Data-Engineering-MCP ↗
+      </a>
+      <div class="view-toggle" role="tablist" aria-label="Switch between project details and flow diagram" style="margin-bottom:20px;display:flex;max-width:max-content">
+        <button class="toggle-btn active" data-card="c2" data-view="details" role="tab" aria-selected="true">Details</button>
+        <button class="toggle-btn" data-card="c2" data-view="flow" role="tab" aria-selected="false">Flow diagram</button>
+      </div>
+
+      <div class="role-view active" id="c2-details">
+      <ul class="bullets">
+        <li>Built <b>three production MCP servers</b> from scratch (Jira, SQL Server, Snowflake), giving LLMs structured, reliable access to each platform without general-purpose API calls.</li>
+        <li>Designed each server around focused, purpose-built tools (create ticket, post message, describe table), keeping control and business logic on the engineering side while minimizing the LLM's decision surface.</li>
+        <li>Powered downstream AI workflows including automated root-cause analysis and feature development, reducing multi-tool context-switching to a single prompted interaction.</li>
+      </ul>
+      </div>
+
+      <div class="role-view" id="c2-flow">
+        <div class="flow-panel">
+          <svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flow of the MCP architecture: an LLM agent calls three purpose-built MCP servers, which connect to Jira, SQL Server, and Snowflake, powering automated RCA and a requirement-to-pull-request workflow">
+            <!-- agent → servers -->
+            <path class="edge" d="M186 130 C 230 120, 240 78, 282 70"/>
+            <path class="edge-flow" d="M186 130 C 230 120, 240 78, 282 70"/>
+            <path class="edge" d="M186 140 C 230 140, 240 140, 282 140"/>
+            <path class="edge-flow" style="animation-delay:.3s" d="M186 140 C 230 140, 240 140, 282 140"/>
+            <path class="edge" d="M186 150 C 230 160, 240 202, 282 210"/>
+            <path class="edge-flow" style="animation-delay:.6s" d="M186 150 C 230 160, 240 202, 282 210"/>
+            <!-- servers → systems -->
+            <path class="edge" d="M438 70 L 486 70"/>
+            <path class="edge-flow" style="animation-delay:.2s" d="M438 70 L 486 70"/>
+            <path class="edge" d="M438 140 L 486 140"/>
+            <path class="edge-flow" style="animation-delay:.5s" d="M438 140 L 486 140"/>
+            <path class="edge" d="M438 210 L 486 210"/>
+            <path class="edge-flow" style="animation-delay:.8s" d="M438 210 L 486 210"/>
+
+            <!-- agent -->
+            <rect x="42" y="106" width="144" height="68" rx="10" fill="#081427"/>
+            <text x="60" y="134" font-family="Space Grotesk" font-weight="600" font-size="14" fill="#fff">LLM agent</text>
+            <text x="60" y="154" font-family="IBM Plex Mono" font-size="10" fill="rgba(255,255,255,.7)">one prompt in</text>
+
+            <!-- mcp servers -->
+            <rect x="282" y="46" width="156" height="48" rx="9" fill="#0e7ce0"/>
+            <text x="298" y="68" font-family="Space Grotesk" font-weight="600" font-size="13" fill="#fff">Jira MCP server</text>
+            <text x="298" y="84" font-family="IBM Plex Mono" font-size="9.5" fill="rgba(255,255,255,.75)">create ticket · comment</text>
+
+            <rect x="282" y="116" width="156" height="48" rx="9" fill="#0e7ce0"/>
+            <text x="298" y="138" font-family="Space Grotesk" font-weight="600" font-size="13" fill="#fff">SQL Server MCP</text>
+            <text x="298" y="154" font-family="IBM Plex Mono" font-size="9.5" fill="rgba(255,255,255,.75)">query · describe table</text>
+
+            <rect x="282" y="186" width="156" height="48" rx="9" fill="#0e7ce0"/>
+            <text x="298" y="208" font-family="Space Grotesk" font-weight="600" font-size="13" fill="#fff">Snowflake MCP</text>
+            <text x="298" y="224" font-family="IBM Plex Mono" font-size="9.5" fill="rgba(255,255,255,.75)">lineage · run checks</text>
+
+            <text class="node-label" x="282" y="256">purpose-built tools · logic stays on the engineering side</text>
+
+            <!-- systems -->
+            <rect x="486" y="48" width="152" height="44" rx="9" fill="#fff" stroke="rgba(10,26,47,0.18)"/>
+            <text class="node-title" x="502" y="74">Jira</text>
+            <rect x="486" y="118" width="152" height="44" rx="9" fill="#fff" stroke="rgba(10,26,47,0.18)"/>
+            <text class="node-title" x="502" y="144">SQL Server</text>
+            <rect x="486" y="188" width="152" height="44" rx="9" fill="#fff" stroke="rgba(10,26,47,0.18)"/>
+            <text class="node-title" x="502" y="214">Snowflake</text>
+
+            <!-- workflows -->
+            <line x1="42" y1="278" x2="638" y2="278" stroke="rgba(10,26,47,0.08)"/>
+            <text class="node-label" x="42" y="270">workflows powered</text>
+            <rect x="42" y="290" width="270" height="38" rx="9" fill="#fff" stroke="rgba(25,178,122,0.55)"/>
+            <text class="node-title" x="58" y="314">Automated root-cause analysis</text>
+            <rect x="330" y="290" width="308" height="38" rx="9" fill="#fff" stroke="rgba(25,178,122,0.55)"/>
+            <text class="node-title" x="346" y="314">Requirement → pull request, end to end</text>
+          </svg>
+          <div class="flow-caption">
+            <span><b>✓</b> 3 production MCP servers</span>
+            <span><b>✓</b> minimal LLM decision surface</span>
+            <span><b>✓</b> one prompt replaces multi-tool hopping</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- SKILLS -->
-<section class="block" id="skills" style="padding-top:30px">
+<section class="block" id="skills" style="padding-top:40px">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="sec-num">03</span><span class="sec-title">Toolkit</span><span class="sec-rule"></span></div>
+    <div class="sec-head reveal">
+      <span class="sec-tag">toolkit</span>
+      <h2 class="sec-title">What I work with</h2>
+    </div>
     <div class="skills-grid stagger">
       <div class="skill-card"><h4>Data &amp; Cloud</h4><div class="chips"><span class="chip">Snowflake</span><span class="chip">dbt</span><span class="chip">AWS</span><span class="chip">Airflow</span><span class="chip">Fivetran</span><span class="chip">Kafka</span><span class="chip">PySpark</span><span class="chip">Databricks</span><span class="chip">Flyway</span></div></div>
       <div class="skill-card"><h4>AI &amp; Automation</h4><div class="chips"><span class="chip">LLMs</span><span class="chip">MCP</span><span class="chip">Snowflake Cortex</span><span class="chip">Claude Code</span><span class="chip">Cursor</span></div></div>
@@ -342,11 +785,14 @@
 </section>
 
 <!-- CERTS -->
-<section class="block" id="certs" style="padding-top:30px">
+<section class="block grid-bg" id="certs" style="padding-top:40px">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="sec-num">04</span><span class="sec-title">Certifications</span><span class="sec-rule"></span></div>
+    <div class="sec-head reveal">
+      <span class="sec-tag">certifications</span>
+      <h2 class="sec-title">Verified credentials</h2>
+    </div>
     <div class="certs stagger">
-      <a class="cert" href="https://www.credly.com/badges/e889e399-9fb2-4b11-97e5-be2a27c1a1ee/public_url" target="_blank" rel="noopener"><span class="nm">AWS Data Engineer — Associate</span><span class="dt">Oct 2025</span></a>
+      <a class="cert" href="https://www.credly.com/badges/e889e399-9fb2-4b11-97e5-be2a27c1a1ee/public_url" target="_blank" rel="noopener"><span class="nm">AWS Data Engineer (Associate)</span><span class="dt">Oct 2025</span></a>
       <a class="cert" href="https://achieve.snowflake.com/840f0f47-fb6e-47d8-a7a8-bf2b164bc20f#acc.unCD8kyL" target="_blank" rel="noopener"><span class="nm">Snowflake SnowPro Core</span><span class="dt">Nov 2024</span></a>
       <div class="cert"><span class="nm">AWS AI Practitioner</span><span class="dt">Apr 2025</span></div>
       <a class="cert" href="https://achieve.snowflake.com/6961e478-ea5e-4d00-9029-c9603397830f#acc.7fomhVYP" target="_blank" rel="noopener"><span class="nm">SnowPro Specialty: Snowpark</span><span class="dt">2025</span></a>
@@ -358,10 +804,10 @@
 
 <!-- CLOSER / CONTACT -->
 <section class="closer" id="contact">
-  <div class="wrap inner">
-    <div class="eyebrow reveal">Let's talk</div>
+  <div class="wrap">
+    <span class="sec-tag reveal">let's talk</span>
     <h2 class="reveal">Got a pipeline that needs<br><em>someone who'll own it?</em></h2>
-    <p class="reveal">I'm open to data engineering roles where the problems are real and the data actually matters. Reach out — I read everything.</p>
+    <p class="reveal">I'm open to data engineering roles, and to teams building agentic, AI-driven workflows on top of their data. If the problems are real, I'm interested. Reach out. I read everything.</p>
     <div class="contact-row reveal">
       <a href="mailto:hiteshg1334@gmail.com" class="btn btn-primary">hiteshg1334@gmail.com <span class="arrow">↗</span></a>
       <a href="https://www.linkedin.com/in/hithesh-patel/" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn <span class="arrow">↗</span></a>
@@ -385,7 +831,7 @@
   // reveal on scroll
   const io=new IntersectionObserver((es)=>{
     es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
-  },{threshold:0.15});
+  },{threshold:0.12});
   document.querySelectorAll('.reveal,.stagger').forEach(el=>io.observe(el));
 
   // stagger children
@@ -409,6 +855,50 @@
     });
   },{threshold:0.4});
   mio.observe(metricGrid);
+
+  // ---- dark mode toggle ----
+  const rootEl=document.documentElement;
+  const themeBtn=document.getElementById('themeBtn');
+  const sunIcon='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.4"/><line x1="12" y1="2.5" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="21.5"/><line x1="2.5" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="21.5" y2="12"/><line x1="5.2" y1="5.2" x2="6.9" y2="6.9"/><line x1="17.1" y1="17.1" x2="18.8" y2="18.8"/><line x1="5.2" y1="18.8" x2="6.9" y2="17.1"/><line x1="17.1" y1="6.9" x2="18.8" y2="5.2"/></svg>';
+  const moonIcon='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A8.7 8.7 0 1 1 11.2 3 6.8 6.8 0 0 0 21 12.8z"/></svg>';
+  function applyTheme(t,save){
+    rootEl.setAttribute('data-theme',t);
+    themeBtn.innerHTML = t==='dark' ? sunIcon : moonIcon;
+    themeBtn.setAttribute('aria-label', t==='dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    if(save){try{localStorage.setItem('theme',t)}catch(e){}}
+  }
+  applyTheme(rootEl.getAttribute('data-theme')||'light',false);
+  themeBtn.addEventListener('click',()=>{
+    applyTheme(rootEl.getAttribute('data-theme')==='dark'?'light':'dark',true);
+  });
+
+  // ---- mobile menu ----
+  const menuBtn=document.getElementById('menuBtn');
+  const mobileMenu=document.getElementById('mobileMenu');
+  function closeMenu(){mobileMenu.classList.remove('open');menuBtn.setAttribute('aria-expanded','false')}
+  menuBtn.addEventListener('click',()=>{
+    const open=mobileMenu.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded',open);
+  });
+  mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+  document.addEventListener('click',(e)=>{
+    if(mobileMenu.classList.contains('open') && !mobileMenu.contains(e.target) && !menuBtn.contains(e.target)) closeMenu();
+  });
+  addEventListener('resize',()=>{if(innerWidth>680)closeMenu()});
+
+  // details / flow toggle per role card
+  document.querySelectorAll('.toggle-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const card=btn.dataset.card, view=btn.dataset.view;
+      document.querySelectorAll(`.toggle-btn[data-card="${card}"]`).forEach(b=>{
+        const on=b===btn;
+        b.classList.toggle('active',on);
+        b.setAttribute('aria-selected',on);
+      });
+      document.getElementById(card+'-details').classList.toggle('active',view==='details');
+      document.getElementById(card+'-flow').classList.toggle('active',view==='flow');
+    });
+  });
 </script>
 </body>
 </html>

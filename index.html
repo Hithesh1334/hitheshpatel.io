@@ -218,12 +218,15 @@
   .role-top{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:6px}
   .role-co{font-family:'Space Grotesk';font-weight:700;font-size:1.35rem;letter-spacing:-0.01em}
   .role-co small{font-family:'IBM Plex Mono';font-weight:400;font-size:12px;color:var(--muted);margin-left:10px;letter-spacing:.03em}
+  .role-co small .client{color:var(--ink);font-weight:600}
   .badge-prod{
     font-family:'IBM Plex Mono';font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;
     color:var(--green);background:rgba(25,178,122,0.1);border:1px solid rgba(25,178,122,0.35);
     padding:5px 11px;border-radius:100px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;
   }
   .badge-prod::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green)}
+  .badge-prod.pre{color:var(--amber);background:rgba(242,160,25,0.1);border-color:rgba(242,160,25,0.4)}
+  .badge-prod.pre::before{background:var(--amber)}
   .role-title{font-family:'Space Grotesk';font-weight:600;font-size:1.12rem;color:var(--ink-soft);margin-bottom:14px}
   .role-stack{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
   .stack-chip{font-family:'IBM Plex Mono';font-size:11.5px;color:var(--blue-deep);background:rgba(14,124,224,0.07);border:1px solid rgba(14,124,224,0.18);padding:4px 10px;border-radius:6px}
@@ -596,7 +599,99 @@
 
     <div class="role-card reveal">
       <div class="role-top">
-        <div class="role-co">phData <small>2024 - Present · Finance · Workday (US)</small></div>
+        <div class="role-co">phData <small>May 2026 - Present · Finance · <span class="client">CrowdStrike (US)</span></small></div>
+        <span class="badge-prod pre">pre-production</span>
+      </div>
+      <div class="role-title">CrowdStrike: Data Foundation &amp; AI Deployment</div>
+      <div class="role-stack">
+        <span class="stack-chip">dbt</span><span class="stack-chip">Snowflake</span><span class="stack-chip">Airflow</span><span class="stack-chip">Python</span><span class="stack-chip">SQL</span><span class="stack-chip">Claude Code</span><span class="stack-chip">Git</span><span class="stack-chip">BitBucket</span>
+      </div>
+      <div class="view-toggle" role="tablist" aria-label="Switch between project details and flow diagram" style="margin-bottom:20px;display:flex;max-width:max-content">
+        <button class="toggle-btn active" data-card="c0" data-view="details" role="tab" aria-selected="true">Details</button>
+        <button class="toggle-btn" data-card="c0" data-view="flow" role="tab" aria-selected="false">Flow diagram</button>
+      </div>
+
+      <div class="role-view active" id="c0-details">
+      <ul class="bullets">
+        <li>Re-architecting a <b>legacy monolithic codebase</b> into a modular dbt + Airflow pipeline on a layered architecture, with each layer scoped to a single responsibility (staging, transformation, serving) for cleaner lineage, easier testing, and long-term maintainability.</li>
+        <li>Designing and building <b>single sources of truth (SSOTs)</b> and curated data products that give business teams reliable, well-documented, analytics-ready datasets for downstream reporting and decision-making.</li>
+        <li>Developed a reusable <b>data-quality and security framework</b> using generic dbt tests and a staging + shell pattern to standardize validation and enforce data-access boundaries across models.</li>
+        <li>Optimizing Snowflake SQL and warehouse workloads, <b>cutting compute cost by roughly 30%</b> through improved query design, pruning, and model refactoring.</li>
+        <li>Implementing data governance and security controls via Snowflake <b>row access policies and column-level encryption</b> to enforce fine-grained, role-based access to sensitive data.</li>
+      </ul>
+      </div>
+
+      <div class="role-view" id="c0-flow">
+        <div class="flow-panel">
+          <svg viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flow of the CrowdStrike platform re-architecture: a legacy monolith split into staging, transformation and serving layers feeding single sources of truth and curated data products, with a data quality and security framework enforcing tests, row access policies and column-level encryption">
+            <!-- monolith → layers -->
+            <path class="edge" d="M180 100 L 226 100"/>
+            <path class="edge-flow" d="M180 100 L 226 100"/>
+            <path class="edge" d="M334 100 L 366 100"/>
+            <path class="edge-flow" style="animation-delay:.3s" d="M334 100 L 366 100"/>
+            <path class="edge" d="M474 100 L 506 100"/>
+            <path class="edge-flow" style="animation-delay:.6s" d="M474 100 L 506 100"/>
+
+            <!-- monolith -->
+            <rect x="34" y="68" width="146" height="64" rx="10" fill="#fff" stroke="rgba(10,26,47,0.18)" stroke-dasharray="5 4"/>
+            <text class="node-title" x="50" y="96">Monolithic</text>
+            <text class="node-label" x="50" y="114">legacy codebase</text>
+
+            <!-- layered architecture -->
+            <rect x="226" y="72" width="108" height="56" rx="10" fill="#0e7ce0"/>
+            <text x="242" y="96" font-family="Space Grotesk" font-weight="600" font-size="13" fill="#fff">Staging</text>
+            <text x="242" y="113" font-family="IBM Plex Mono" font-size="10" fill="rgba(255,255,255,.75)">raw → typed</text>
+
+            <rect x="366" y="72" width="108" height="56" rx="10" fill="#0e7ce0"/>
+            <text x="382" y="96" font-family="Space Grotesk" font-weight="600" font-size="13" fill="#fff">Transform</text>
+            <text x="382" y="113" font-family="IBM Plex Mono" font-size="10" fill="rgba(255,255,255,.75)">business logic</text>
+
+            <rect x="506" y="72" width="108" height="56" rx="10" fill="#0e7ce0"/>
+            <text x="522" y="96" font-family="Space Grotesk" font-weight="600" font-size="13" fill="#fff">Serving</text>
+            <text x="522" y="113" font-family="IBM Plex Mono" font-size="10" fill="rgba(255,255,255,.75)">SSOT · products</text>
+
+            <text class="node-label" x="226" y="152">dbt + Airflow · one responsibility per layer</text>
+
+            <!-- outputs -->
+            <path class="edge" d="M560 128 C 560 160, 560 160, 560 182"/>
+            <path class="edge-flow" style="animation-delay:.9s" d="M560 128 C 560 160, 560 160, 560 182"/>
+            <rect x="452" y="182" width="196" height="52" rx="10" fill="#fff" stroke="rgba(25,178,122,0.55)"/>
+            <text class="node-title" x="468" y="205">Curated data products</text>
+            <text class="node-label" x="468" y="223">analytics-ready · documented</text>
+
+            <!-- cost optimization callout -->
+            <rect x="226" y="182" width="196" height="52" rx="10" fill="#fff" stroke="rgba(242,160,25,0.6)"/>
+            <text class="node-title" x="242" y="205">~30% lower compute</text>
+            <text class="node-label" x="242" y="223">query design · pruning</text>
+
+            <!-- governance band -->
+            <line x1="34" y1="272" x2="654" y2="272" stroke="rgba(10,26,47,0.08)"/>
+            <text class="node-label" x="34" y="264">quality &amp; security framework</text>
+
+            <rect x="34" y="284" width="196" height="52" rx="10" fill="#081427"/>
+            <text x="50" y="307" font-family="Space Grotesk" font-weight="600" font-size="13" fill="#fff">Generic dbt tests</text>
+            <text x="50" y="325" font-family="IBM Plex Mono" font-size="10" fill="rgba(255,255,255,.7)">staging + shell pattern</text>
+
+            <rect x="246" y="284" width="196" height="52" rx="10" fill="#081427"/>
+            <text x="262" y="307" font-family="Space Grotesk" font-weight="600" font-size="13" fill="#fff">Row access policies</text>
+            <text x="262" y="325" font-family="IBM Plex Mono" font-size="10" fill="rgba(255,255,255,.7)">role-based, fine-grained</text>
+
+            <rect x="458" y="284" width="196" height="52" rx="10" fill="#081427"/>
+            <text x="474" y="307" font-family="Space Grotesk" font-weight="600" font-size="13" fill="#fff">Column encryption</text>
+            <text x="474" y="325" font-family="IBM Plex Mono" font-size="10" fill="rgba(255,255,255,.7)">sensitive fields masked</text>
+          </svg>
+          <div class="flow-caption">
+            <span><b>✓</b> monolith → staging · transform · serving</span>
+            <span><b>✓</b> SSOTs + curated data products</span>
+            <span><span class="amber">▲</span> ~30% Snowflake compute saved</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-card reveal">
+      <div class="role-top">
+        <div class="role-co">phData <small>2024 - 2026 · Finance · <span class="client">Workday (US)</span></small></div>
         <span class="badge-prod">in production</span>
       </div>
       <div class="role-title">Workday: Enterprise Data &amp; Analytics Platform Modernization</div>

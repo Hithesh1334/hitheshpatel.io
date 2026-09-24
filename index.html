@@ -576,6 +576,362 @@
     .to-top{transform:none}
   }
   :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+
+  /* ================================================================
+     V4 — interactive layer: ⌘K palette · live SQL console ·
+     runnable hero pipeline · skill lineage
+     ================================================================ */
+  kbd{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;line-height:1;
+    padding:3px 6px;border-radius:5px;border:1px solid var(--line);
+    background:var(--bg);color:var(--muted);box-shadow:0 1px 0 var(--line);
+  }
+  .cmdk-btn{
+    display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 10px 0 12px;
+    border-radius:9px;border:1px solid var(--line);background:var(--panel);color:var(--muted);
+    font-family:'IBM Plex Mono';font-size:11.5px;cursor:pointer;
+    transition:border-color .2s,color .2s,transform .2s;
+  }
+  .cmdk-btn:hover{border-color:var(--blue);color:var(--blue-deep);transform:translateY(-1px)}
+  .cmdk-btn .lbl{letter-spacing:.04em}
+  @media(max-width:920px){.cmdk-btn .lbl,.cmdk-btn kbd{display:none}.cmdk-btn{width:38px;padding:0;justify-content:center}}
+
+  /* ---- command palette ---- */
+  .cmdk-overlay{
+    position:fixed;inset:0;z-index:100;display:none;
+    align-items:flex-start;justify-content:center;padding:13vh 16px 16px;
+    background:rgba(10,10,10,.42);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  }
+  .cmdk-overlay.open{display:flex;animation:fadeIn .18s ease}
+  @keyframes fadeIn{from{opacity:0}}
+  .cmdk{
+    width:min(640px,100%);background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.55);overflow:hidden;
+    animation:popIn .26s var(--ease);
+  }
+  @keyframes popIn{from{opacity:0;transform:translateY(-8px) scale(.98)}}
+  .cmdk-input-row{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+  .cmdk-input-row svg{color:var(--muted);flex:0 0 auto}
+  .cmdk-input{
+    flex:1;min-width:0;border:none;outline:none;background:transparent;color:var(--ink);
+    font-family:'Inter';font-size:16px;
+  }
+  .cmdk-input::placeholder{color:var(--muted-2)}
+  .cmdk-list{max-height:min(52vh,420px);overflow-y:auto;padding:8px;overscroll-behavior:contain}
+  .cmdk-group{font-family:'IBM Plex Mono';font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);padding:10px 12px 6px}
+  .cmdk-item{
+    display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:9px;cursor:pointer;
+    color:var(--ink-soft);font-size:14.5px;position:relative;
+  }
+  .cmdk-item .ic{
+    width:26px;height:26px;border-radius:7px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono';font-size:12px;background:var(--bg);border:1px solid var(--line);color:var(--muted);
+  }
+  .cmdk-item .tx{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cmdk-item .tx mark{background:none;color:var(--blue-deep);font-weight:600}
+  .cmdk-item .hn{font-family:'IBM Plex Mono';font-size:11px;color:var(--muted-2);white-space:nowrap}
+  .cmdk-item[aria-selected="true"]{background:rgba(61,90,254,.09);color:var(--ink)}
+  .cmdk-item[aria-selected="true"]::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:3px;background:var(--blue)}
+  .cmdk-item[aria-selected="true"] .ic{background:var(--blue);border-color:var(--blue);color:#fff}
+  .cmdk-empty{padding:30px 16px;text-align:center;color:var(--muted);font-size:14px}
+  .cmdk-foot{
+    display:flex;gap:16px;flex-wrap:wrap;padding:10px 16px;border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono';font-size:10.5px;color:var(--muted-2);align-items:center;
+  }
+  .cmdk-foot span{display:inline-flex;gap:6px;align-items:center}
+  html[data-theme="dark"] .cmdk-item .tx mark{color:var(--cyan)}
+
+  /* ---- toast ---- */
+  .toast{
+    position:fixed;left:50%;bottom:26px;z-index:120;transform:translate(-50%,20px);opacity:0;
+    background:var(--ink);color:var(--bg);font-family:'IBM Plex Mono';font-size:12.5px;
+    padding:11px 18px;border-radius:10px;pointer-events:none;box-shadow:var(--shadow-lg);
+    transition:opacity .3s var(--ease),transform .3s var(--ease);
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  /* ---- runnable hero pipeline ---- */
+  .pipeline-head{gap:12px}
+  .pipeline-head #termCmd{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .run-btn{
+    display:inline-flex;align-items:center;gap:6px;flex:0 0 auto;
+    font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.04em;
+    color:#fff;background:var(--green);border:none;border-radius:6px;padding:5px 10px;cursor:pointer;
+    transition:filter .2s,transform .2s;
+  }
+  .run-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+  .run-btn[disabled]{background:var(--muted-2);cursor:progress}
+  .run-btn .spin{width:9px;height:9px;border-radius:50%;border:1.5px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .pipeline-svg g[data-step] rect{transition:filter .4s var(--ease),opacity .4s,stroke .4s}
+  .pipeline-svg g[data-step]{transition:opacity .4s var(--ease)}
+  .pipeline-svg.running g[data-step]{opacity:.32}
+  .pipeline-svg.running g[data-step].lit{opacity:1}
+  .pipeline-svg g[data-step].lit rect{filter:drop-shadow(0 0 10px rgba(61,90,254,.55))}
+  .pipeline-svg g[data-step].ok rect.n-card{stroke:var(--green);stroke-width:1.6}
+  .pipeline-svg.running .edge-flow{animation-duration:.45s}
+  .pipe-log{
+    height:112px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;
+    padding:10px 16px;border-top:1px solid var(--line);background:var(--surface-sunk);
+    font-family:'IBM Plex Mono';font-size:10.8px;line-height:1.65;color:var(--muted);
+  }
+  .pipe-log .ln{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;animation:lnIn .25s var(--ease)}
+  @keyframes lnIn{from{opacity:0;transform:translateY(4px)}}
+  .pipe-log .ok{color:var(--green)}
+  .pipe-log .hl{color:var(--blue-deep)}
+  .pipe-log .am{color:var(--amber)}
+  .pipe-log .dim{color:var(--muted-2)}
+  html[data-theme="dark"] .pipe-log .hl{color:var(--cyan)}
+
+  /* ---- SQL console ---- */
+  .sql-intro{color:var(--muted);max-width:60ch;margin-top:14px;font-size:16px}
+  .sql-shell{
+    --c-bg:#0e0f13;--c-panel:#15171d;--c-line:rgba(255,255,255,.08);--c-ink:#e6e6e6;--c-mute:#8a8f98;
+    background:var(--c-bg);color:var(--c-ink);border-radius:16px;overflow:hidden;
+    border:1px solid rgba(255,255,255,.06);box-shadow:0 40px 80px -40px rgba(10,12,30,.55);
+    display:grid;grid-template-columns:230px minmax(0,1fr);
+  }
+  .sql-top{
+    grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:12px 16px;border-bottom:1px solid var(--c-line);
+    font-family:'IBM Plex Mono';font-size:11.5px;color:var(--c-mute);flex-wrap:wrap;
+  }
+  .sql-top .lights{display:flex;gap:6px}
+  .sql-top .lights i{width:9px;height:9px;border-radius:50%;display:block;background:#f87171}
+  .sql-top .lights i:nth-child(2){background:var(--amber)}
+  .sql-top .lights i:nth-child(3){background:var(--green)}
+  .sql-top .ctx b{color:var(--c-ink);font-weight:500}
+  .sql-top .wh{margin-left:auto;display:inline-flex;align-items:center;gap:7px;color:#9fe3bf}
+  .sql-top .wh::before{content:"";width:7px;height:7px;border-radius:50%;background:#3dd68c;box-shadow:0 0 0 3px rgba(61,214,140,.18)}
+  .sql-side{border-right:1px solid var(--c-line);padding:14px 10px;font-family:'IBM Plex Mono';font-size:12px;background:var(--c-panel)}
+  .sql-side h5{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--c-mute);font-weight:500;padding:0 8px 8px}
+  .tbl{border-radius:8px}
+  .tbl-btn{
+    width:100%;display:flex;align-items:center;gap:8px;padding:7px 8px;border:none;background:none;color:var(--c-ink);
+    font:inherit;cursor:pointer;border-radius:7px;text-align:left;
+  }
+  .tbl-btn:hover{background:rgba(255,255,255,.05)}
+  .tbl-btn .cnt{margin-left:auto;color:var(--c-mute);font-size:10.5px}
+  .tbl-btn svg{color:#7c8cff;flex:0 0 auto}
+  .tbl-cols{padding:0 0 6px 30px;display:none}
+  .tbl.open .tbl-cols{display:block}
+  .tbl-cols span{display:flex;justify-content:space-between;gap:8px;color:var(--c-mute);font-size:11px;line-height:1.9;cursor:pointer}
+  .tbl-cols span:hover{color:var(--c-ink)}
+  .tbl-cols em{font-style:normal;color:#5d636e;font-size:10px}
+  .sql-main{min-width:0;display:flex;flex-direction:column}
+  .sql-presets{display:flex;gap:8px;flex-wrap:wrap;padding:14px 16px 0}
+  .preset{
+    font-family:'IBM Plex Mono';font-size:11.5px;color:#c7ceff;background:rgba(124,140,255,.1);
+    border:1px solid rgba(124,140,255,.25);border-radius:100px;padding:5px 12px;cursor:pointer;
+    transition:background .2s,transform .2s,border-color .2s;
+  }
+  .preset:hover{background:rgba(124,140,255,.2);border-color:rgba(124,140,255,.5);transform:translateY(-1px)}
+  .sql-editor{position:relative;margin:14px 16px 0;border:1px solid var(--c-line);border-radius:10px;background:#0a0b0e;
+    transition:border-color .2s}
+  .sql-editor:focus-within{border-color:rgba(124,140,255,.55)}
+  .sql-editor pre,.sql-editor textarea{
+    margin:0;padding:14px 16px 14px 50px;font-family:'IBM Plex Mono',monospace;font-size:13.5px;line-height:1.7;
+    white-space:pre-wrap;word-break:break-word;tab-size:2;min-height:128px;
+  }
+  .sql-editor pre{pointer-events:none;color:var(--c-ink)}
+  .sql-editor textarea{
+    position:absolute;inset:0;width:100%;height:100%;resize:none;border:none;outline:none;background:transparent;
+    color:transparent;caret-color:#9fadff;overflow:hidden;
+  }
+  .sql-editor textarea::selection{background:rgba(124,140,255,.35);color:transparent}
+  .sql-gutter{position:absolute;left:0;top:14px;width:36px;text-align:right;font-family:'IBM Plex Mono';font-size:13.5px;line-height:1.7;color:#454a54;pointer-events:none;user-select:none}
+  .tk-kw{color:#8b9bff;font-weight:500}
+  .tk-fn{color:#f0a6e0}
+  .tk-str{color:#e8b86b}
+  .tk-num{color:#7ee0a8}
+  .tk-cm{color:#5d636e;font-style:italic}
+  .tk-op{color:#9aa0aa}
+  .sql-bar{display:flex;align-items:center;gap:12px;padding:12px 16px;flex-wrap:wrap}
+  .sql-run{
+    display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk';font-weight:600;font-size:14px;
+    background:#3d5afe;color:#fff;border:none;border-radius:8px;padding:9px 16px;cursor:pointer;
+    box-shadow:0 8px 20px -10px rgba(61,90,254,.8);transition:transform .2s,background .2s;
+  }
+  .sql-run:hover{background:#2438d4;transform:translateY(-1px)}
+  .sql-run kbd{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.2);color:#fff;box-shadow:none}
+  .sql-status{font-family:'IBM Plex Mono';font-size:11.5px;color:var(--c-mute)}
+  .sql-status b{color:#7ee0a8;font-weight:500}
+  .sql-status .err{color:#ff8a8a}
+  .sql-hint{margin-left:auto;font-family:'IBM Plex Mono';font-size:11px;color:#5d636e}
+  .sql-shell kbd{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);color:#8a8f98;box-shadow:none}
+  .sql-out{border-top:1px solid var(--c-line);min-height:220px;max-height:420px;overflow:auto;position:relative}
+  .sql-out table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono';font-size:12.5px}
+  .sql-out th{
+    position:sticky;top:0;background:var(--c-panel);text-align:left;font-weight:500;color:var(--c-mute);
+    font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:10px 14px;border-bottom:1px solid var(--c-line);white-space:nowrap;
+  }
+  .sql-out th:first-child,.sql-out td:first-child{padding-left:16px}
+  .sql-out td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;color:#d8d8d8;max-width:340px}
+  .sql-out tr{animation:rowIn .35s var(--ease) both}
+  @keyframes rowIn{from{opacity:0;transform:translateY(6px)}}
+  .sql-out tbody tr:hover td{background:rgba(124,140,255,.06)}
+  .sql-out td.n{color:#7ee0a8;text-align:right}
+  .sql-out td.null{color:#5d636e;font-style:italic}
+  .sql-out td.t{color:#8b9bff}
+  .sql-out td.f{color:#ff8a8a}
+  .sql-out .rn{color:#454a54;width:1%;text-align:right}
+  .sql-msg{padding:22px 18px;font-family:'IBM Plex Mono';font-size:12.5px;line-height:1.8;color:var(--c-mute)}
+  .sql-msg .e{color:#ff8a8a}
+  .sql-msg code{color:#c7ceff;background:rgba(124,140,255,.1);padding:1px 6px;border-radius:4px;cursor:pointer}
+  .sql-msg code:hover{background:rgba(124,140,255,.22)}
+  @media(max-width:820px){
+    .sql-shell{grid-template-columns:1fr}
+    .sql-side{border-right:none;border-bottom:1px solid var(--c-line);display:flex;gap:6px;overflow-x:auto;padding:10px}
+    .sql-side h5{display:none}
+    .tbl{flex:0 0 auto}
+    .tbl-btn{white-space:nowrap;background:rgba(255,255,255,.04)}
+    .tbl-cols,.tbl.open .tbl-cols{display:none}
+    .sql-hint{display:none}
+    .sql-top .ctx{display:none}
+  }
+  @media(max-width:520px){
+    .sql-editor pre,.sql-editor textarea{font-size:12.5px;padding-left:40px}
+    .sql-gutter{font-size:12.5px;width:28px}
+  }
+
+  /* ---- skill lineage ---- */
+  .chip.traceable{cursor:pointer}
+  .chip.traceable.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .lineage{
+    margin-top:18px;border:1px dashed rgba(61,90,254,.35);border-radius:12px;padding:14px 18px;
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:rgba(61,90,254,.04);
+    font-family:'IBM Plex Mono';font-size:12.5px;color:var(--muted);min-height:54px;
+  }
+  .lineage .src{color:#fff;background:var(--blue);padding:4px 10px;border-radius:6px}
+  .lineage .arrow-ln{flex:0 0 38px;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));position:relative}
+  .lineage .arrow-ln::after{content:"";position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left-color:var(--cyan);border-right:none}
+  .lineage .dst{color:var(--ink);background:var(--panel);border:1px solid rgba(61,153,112,.5);padding:4px 10px;border-radius:6px}
+  .lineage .go{margin-left:auto;color:var(--blue-deep);cursor:pointer;background:none;border:none;font:inherit}
+  .lineage .go:hover{text-decoration:underline}
+  html[data-theme="dark"] .lineage .go{color:var(--cyan)}
+  .role-card{transition:transform .45s var(--ease), box-shadow .45s var(--ease), border-color .35s var(--ease-soft), opacity .45s var(--ease), filter .45s var(--ease)}
+  #work.tracing .role-card:not(.lineage-hit){opacity:.28;filter:grayscale(.8) blur(.5px)}
+  #work.tracing .role-card.lineage-hit{border-color:var(--blue);box-shadow:0 0 0 3px rgba(61,90,254,.15),var(--shadow-lg)}
+  .stack-chip.lineage-on{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .trace-pill{
+    position:fixed;left:50%;bottom:24px;z-index:90;transform:translate(-50%,30px);opacity:0;pointer-events:none;
+    display:flex;align-items:center;gap:12px;padding:9px 10px 9px 16px;border-radius:100px;
+    background:var(--ink);color:var(--bg);font-family:'IBM Plex Mono';font-size:12px;box-shadow:var(--shadow-lg);
+    transition:opacity .35s var(--ease),transform .35s var(--ease);
+  }
+  .trace-pill.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+  .trace-pill button{border:none;background:rgba(127,127,127,.25);color:inherit;border-radius:100px;padding:4px 10px;cursor:pointer;font:inherit}
+  /* ---- certifications folder ---- */
+  .cert-vault{position:relative;min-height:260px}
+  .folder{
+    --f1:var(--blue);--f2:var(--blue-deep);
+    position:relative;display:block;width:260px;height:200px;margin:10px auto 0;
+    background:none;border:none;cursor:pointer;perspective:900px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .folder:focus-visible{outline-offset:10px;border-radius:14px}
+  .folder[hidden],.cert-win[hidden]{display:none}
+  .folder-back{
+    position:absolute;left:0;right:0;bottom:0;top:22px;border-radius:12px;
+    background:var(--f2);box-shadow:0 30px 60px -30px rgba(36,56,212,.6);
+  }
+  .folder-back::before{
+    content:"";position:absolute;left:0;top:-18px;width:104px;height:30px;border-radius:10px 12px 0 0;background:var(--f2);
+  }
+  .paper{
+    position:absolute;left:22px;right:22px;top:12px;height:150px;border-radius:6px;
+    background:#fff;border:1px solid rgba(26,26,26,.08);
+    background-image:repeating-linear-gradient(transparent 0 16px,rgba(61,90,254,.12) 16px 17px);
+    background-position:0 26px;background-repeat:no-repeat;background-size:100% calc(100% - 40px);
+    box-shadow:0 4px 12px -6px rgba(0,0,0,.25);
+    transition:transform .5s var(--ease),opacity .4s;
+  }
+  .paper::before{content:"";position:absolute;left:14px;top:12px;width:44%;height:6px;border-radius:3px;background:rgba(26,26,26,.18)}
+  .paper.p1{transform:rotate(-5deg) translateY(6px)}
+  .paper.p2{transform:rotate(3deg) translateY(2px);left:30px;right:16px}
+  .paper.p3{transform:translateY(-2px)}
+  .folder-front{
+    position:absolute;left:0;right:0;bottom:0;height:72%;border-radius:12px;
+    background:linear-gradient(160deg,var(--f1),var(--f2));
+    transform-origin:50% 100%;transition:transform .55s var(--ease);
+    display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;padding:18px 20px;text-align:left;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.25);
+  }
+  .folder-label{font-family:'Space Grotesk';font-weight:700;font-size:20px;color:#fff;letter-spacing:-.01em}
+  .folder-meta{font-family:'IBM Plex Mono';font-size:11px;color:rgba(255,255,255,.75);margin-top:4px}
+  .folder:hover .folder-front,.folder:focus-visible .folder-front{transform:rotateX(-24deg)}
+  .folder:hover .p1,.folder:focus-visible .p1{transform:rotate(-9deg) translate(-14px,-26px)}
+  .folder:hover .p2,.folder:focus-visible .p2{transform:rotate(8deg) translate(14px,-32px)}
+  .folder:hover .p3,.folder:focus-visible .p3{transform:translateY(-40px)}
+  /* opening: the lid drops, the papers fly up and out */
+  .folder.opening .folder-front{transform:rotateX(-68deg)}
+  .folder.opening .p1{transform:rotate(-16deg) translate(-60px,-120px);opacity:0}
+  .folder.opening .p2{transform:rotate(14deg) translate(60px,-130px);opacity:0}
+  .folder.opening .p3{transform:translateY(-150px);opacity:0}
+  .folder.opening{transition:opacity .35s .35s,transform .5s .3s var(--ease);opacity:0;transform:scale(.9)}
+  .folder-hint{text-align:center;margin-top:18px;font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted-2)}
+  html[data-theme="dark"] .paper{background-color:#ececec}
+
+  .cert-win{
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg);
+    animation:winIn .5s var(--ease);
+  }
+  @keyframes winIn{from{opacity:0;transform:translateY(24px) scale(.96)}}
+  .cw-bar{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line);
+    font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted);background:var(--surface-sunk);
+  }
+  .cw-bar .lights{display:flex;gap:6px}
+  .cw-bar .lights i{width:9px;height:9px;border-radius:50%;display:block;background:#f87171}
+  .cw-bar .lights i:nth-child(2){background:var(--amber)}
+  .cw-bar .lights i:nth-child(3){background:var(--green)}
+  .cw-path b{color:var(--ink);font-weight:500}
+  .cw-count{color:var(--muted-2)}
+  .cw-close{
+    margin-left:auto;font:inherit;color:var(--muted);background:var(--panel);border:1px solid var(--line);
+    border-radius:7px;padding:5px 10px;cursor:pointer;transition:color .2s,border-color .2s;
+  }
+  .cw-close:hover{color:var(--blue-deep);border-color:var(--blue)}
+  .cert-win .certs{padding:20px;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+  .cert.file{
+    align-items:center;text-align:center;gap:6px;padding:22px 14px 16px;border-color:transparent;background:transparent;
+  }
+  .cert.file:hover{background:var(--bg);border-color:var(--line);box-shadow:none}
+  .cert.file .nm{padding:0;font-size:14px}
+  .cert.file .fn{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--muted-2);word-break:break-all;line-height:1.4}
+  .cert.file .dt::before{content:"✓ verified · ";color:var(--green)}
+  div.cert.file .dt::before{content:"";}
+  .ficon{
+    --tag:var(--blue);
+    position:relative;width:52px;height:64px;margin-bottom:8px;border-radius:5px;
+    background:var(--panel);border:1.5px solid var(--line);
+    clip-path:polygon(0 0,70% 0,100% 22%,100% 100%,0 100%);
+    background-image:repeating-linear-gradient(transparent 0 7px,var(--line) 7px 8px);
+    background-size:60% 60%;background-position:50% 30%;background-repeat:no-repeat;
+    transition:transform .4s var(--ease);
+  }
+  .ficon::after{content:"";position:absolute;right:-1px;top:-1px;width:32%;height:23%;background:var(--line);border-bottom-left-radius:4px}
+  .ficon i{
+    position:absolute;left:-1px;right:-1px;bottom:8px;padding:2px 0;background:var(--tag);color:#fff;
+    font-style:normal;font-family:'IBM Plex Mono';font-size:8.5px;font-weight:500;letter-spacing:.06em;
+  }
+  .cert.file:hover .ficon{transform:translateY(-4px) rotate(-3deg)}
+  .cert.file[data-issuer="aws"] .ficon{--tag:#e8912d}
+  .cert.file[data-issuer="snow"] .ficon{--tag:#29b5e8}
+  .cert.file[data-issuer="dbt"] .ficon{--tag:#fe6a4a}
+  .cert.file[data-issuer="anth"] .ficon{--tag:#c96442}
+  /* files fly out of the folder one after another */
+  .cert-win .cert.file{animation:fileOut .55s var(--ease) both}
+  @keyframes fileOut{from{opacity:0;transform:translateY(-40px) scale(.6)}}
+  @media(max-width:520px){
+    .cert-win .certs{grid-template-columns:1fr 1fr;padding:12px;gap:4px}
+    .folder{width:220px;height:172px}
+    .cw-count{display:none}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .sql-out tr,.pipe-log .ln{animation:none}
+    .cert-win,.cert-win .cert.file{animation:none}
+  }
 </style>
 </head>
 <body>
@@ -588,10 +944,15 @@
     <div class="nav-links">
       <a href="#about">About</a>
       <a href="#work">Experience</a>
+      <a href="#query">Query</a>
       <a href="#skills">Skills</a>
       <a href="#certs">Certifications</a>
       <a href="#contact">Contact</a>
     </div>
+    <button class="cmdk-btn" id="cmdkBtn" aria-label="Open command palette" title="Command palette">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <span class="lbl">Search</span><kbd class="mod-key">⌘K</kbd>
+    </button>
     <button class="icon-btn" id="themeBtn" aria-label="Switch to dark mode" title="Toggle dark mode"></button>
     <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" title="Menu">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
@@ -601,6 +962,7 @@
 <div class="mobile-menu" id="mobileMenu">
   <a href="#about">About</a>
   <a href="#work">Experience</a>
+  <a href="#query">Query my résumé</a>
   <a href="#skills">Skills</a>
   <a href="#certs">Certifications</a>
   <a href="#contact">Contact</a>
@@ -629,7 +991,8 @@
       <div class="pipeline-card parallax-slow" aria-label="Illustration of a data pipeline from raw sources to trusted dashboards">
         <div class="pipeline-head">
           <span class="lights"><i></i><i></i><i></i></span>
-          <span id="termCmd" data-cmd="dbt run --select trusted_marts">dbt run --select trusted_marts</span>
+          <span id="termCmd" data-cmd="dbt build --select trusted_marts">dbt build --select trusted_marts</span>
+          <button class="run-btn" id="runBtn" aria-label="Run the pipeline"><span class="ri">▶</span> <span class="rt">run</span></button>
         </div>
         <div class="pipeline-scroll">
         <svg class="pipeline-svg" viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg" role="img">
@@ -648,47 +1011,48 @@
           <path class="edge-flow" style="animation-delay:1s" d="M340 132 C 378 160, 388 230, 424 248"/>
 
           <!-- source nodes -->
-          <g>
+          <g data-step="0">
             <rect x="28" y="46" width="90" height="46" rx="9" class="n-card" stroke="rgba(26,26,26,0.14)"/>
             <text class="node-title" x="44" y="66">ERP</text>
             <text class="node-label" x="44" y="82">raw.finance</text>
           </g>
-          <g>
+          <g data-step="0">
             <rect x="28" y="126" width="90" height="46" rx="9" class="n-card" stroke="rgba(26,26,26,0.14)"/>
             <text class="node-title" x="44" y="146">CRM</text>
             <text class="node-label" x="44" y="162">raw.gtm</text>
           </g>
-          <g>
+          <g data-step="0">
             <rect x="28" y="206" width="90" height="46" rx="9" class="n-card" stroke="rgba(26,26,26,0.14)"/>
             <text class="node-title" x="44" y="226">Events</text>
             <text class="node-label" x="44" y="242">raw.cx</text>
           </g>
 
           <!-- transform node -->
-          <g>
+          <g data-step="1">
             <rect x="232" y="88" width="108" height="60" rx="10" class="n-accent" />
             <text x="250" y="113" font-family="Space Grotesk" font-weight="600" font-size="13.5" fill="#fff">dbt models</text>
             <text x="250" y="131" font-family="IBM Plex Mono" font-size="10" fill="rgba(255,255,255,.75)">tests ✓ · SCD2</text>
           </g>
 
           <!-- output nodes -->
-          <g>
+          <g data-step="2">
             <rect x="424" y="46" width="84" height="46" rx="9" class="n-card" stroke="rgba(61,153,112,0.5)"/>
             <text class="node-title" x="438" y="66">Facts</text>
             <text class="node-label" x="438" y="82">marts.em</text>
           </g>
-          <g>
+          <g data-step="2">
             <rect x="424" y="136" width="84" height="46" rx="9" class="n-card" stroke="rgba(61,153,112,0.5)"/>
             <text class="node-title" x="438" y="156">Dims</text>
             <text class="node-label" x="438" y="172">marts.gtm</text>
           </g>
-          <g>
+          <g data-step="2">
             <rect x="424" y="224" width="84" height="46" rx="9" class="n-card" stroke="rgba(61,153,112,0.5)"/>
             <text class="node-title" x="438" y="244">BI</text>
             <text class="node-label" x="438" y="260">dashboards</text>
           </g>
         </svg>
         </div>
+        <div class="pipe-log" id="pipeLog" aria-live="polite"><div class="ln dim">$ waiting for a run · press ▶ run</div></div>
         <div class="pipeline-foot">
           <span><b>✓ 150+ models</b> refactored</span>
           <span><b>✓ tests</b> passing</span>
@@ -839,7 +1203,7 @@
       </div>
       <div class="role-title">Workday: Enterprise Data &amp; Analytics Platform Modernization</div>
       <div class="role-stack">
-        <span class="stack-chip">dbt</span><span class="stack-chip">Snowflake</span><span class="stack-chip">SQL</span><span class="stack-chip">Python</span><span class="stack-chip">Snowflake Cortex</span><span class="stack-chip">Claude Code</span><span class="stack-chip">Cursor</span><span class="stack-chip">MCP</span><span class="stack-chip">GitHub</span><span class="stack-chip">Jira</span>
+        <span class="stack-chip">dbt</span><span class="stack-chip">Snowflake</span><span class="stack-chip">SQL</span><span class="stack-chip">Python</span><span class="stack-chip">Snowflake Cortex</span><span class="stack-chip">Claude Code</span><span class="stack-chip">Cursor</span><span class="stack-chip">MCP</span><span class="stack-chip">Git</span><span class="stack-chip">GitHub</span><span class="stack-chip">Jira</span>
       </div>
       <div class="view-toggle" role="tablist" aria-label="Switch between project details and flow diagram" style="margin-bottom:20px">
         <button class="toggle-btn active" data-card="c1" data-view="details" role="tab" aria-selected="true">Details</button>
@@ -933,7 +1297,7 @@
       </div>
       <div class="role-title">Prism: Building Data Pipelines End to End with AI</div>
       <div class="role-stack">
-        <span class="stack-chip">React 19</span><span class="stack-chip">TypeScript</span><span class="stack-chip">Vite</span><span class="stack-chip">Tailwind</span><span class="stack-chip">FastAPI</span><span class="stack-chip">Python</span><span class="stack-chip">LangChain</span><span class="stack-chip">LangGraph</span><span class="stack-chip">MCP</span><span class="stack-chip">WebSockets</span><span class="stack-chip">SQLite</span>
+        <span class="stack-chip">React 19</span><span class="stack-chip">TypeScript</span><span class="stack-chip">Vite</span><span class="stack-chip">Tailwind</span><span class="stack-chip">FastAPI</span><span class="stack-chip">Python</span><span class="stack-chip">LangChain</span><span class="stack-chip">LangGraph</span><span class="stack-chip">MCP</span><span class="stack-chip">Claude Code</span><span class="stack-chip">Git</span><span class="stack-chip">WebSockets</span><span class="stack-chip">SQLite</span>
       </div>
       <div class="view-toggle" role="tablist" aria-label="Switch between project details and flow diagram" style="margin-bottom:20px;display:flex;max-width:max-content">
         <button class="toggle-btn active" data-card="c2" data-view="details" role="tab" aria-selected="true">Details</button>
@@ -1032,7 +1396,7 @@
       </div>
       <div class="role-title">MCP Server Development: Jira, SQL Server &amp; Snowflake</div>
       <div class="role-stack">
-        <span class="stack-chip">Python</span><span class="stack-chip">MCP SDK</span><span class="stack-chip">REST APIs</span>
+        <span class="stack-chip">Python</span><span class="stack-chip">MCP SDK</span><span class="stack-chip">REST APIs</span><span class="stack-chip">Claude Code</span><span class="stack-chip">Git</span>
       </div>
       <a class="repo-link" href="https://github.com/Data-Engineering-MCP" target="_blank" rel="noopener">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -1116,6 +1480,39 @@
   </div>
 </section>
 
+<!-- QUERY MY RESUME -->
+<section class="block" id="query" style="padding-top:40px">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">live sql</span>
+      <h2 class="sec-title">Don't scroll. Query me.</h2>
+      <p class="sql-intro">This is a real (tiny) SQL engine running in your browser over my career data. Pick a query or write your own: <code class="mono">SELECT</code>, <code class="mono">WHERE</code>, <code class="mono">LIKE</code>, <code class="mono">IN</code>, <code class="mono">GROUP BY</code>, <code class="mono">ORDER BY</code>, <code class="mono">LIMIT</code>.</p>
+    </div>
+    <div class="sql-shell reveal">
+      <div class="sql-top">
+        <span class="lights"><i></i><i></i><i></i></span>
+        <span class="ctx">worksheet · <b>HITESH_DB.CAREER</b> · role <b>RECRUITER</b></span>
+        <span class="wh">RESUME_WH · running</span>
+      </div>
+      <aside class="sql-side" id="sqlSide" aria-label="Tables"><h5>tables</h5></aside>
+      <div class="sql-main">
+        <div class="sql-presets" id="sqlPresets"></div>
+        <div class="sql-editor">
+          <div class="sql-gutter" id="sqlGutter" aria-hidden="true">1</div>
+          <pre id="sqlHl" aria-hidden="true"></pre>
+          <textarea id="sqlInput" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="SQL query editor"></textarea>
+        </div>
+        <div class="sql-bar">
+          <button class="sql-run" id="sqlRun">▶ Run <kbd class="mod-key">⌘↵</kbd></button>
+          <span class="sql-status" id="sqlStatus">ready</span>
+          <span class="sql-hint">tip: <kbd>SHOW TABLES</kbd> · <kbd>DESCRIBE projects</kbd></span>
+        </div>
+        <div class="sql-out" id="sqlOut" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- SKILLS -->
 <section class="block" id="skills" style="padding-top:40px">
   <div class="wrap">
@@ -1129,6 +1526,7 @@
       <div class="skill-card"><h4>Languages</h4><div class="chips"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Java</span><span class="chip">HTML/CSS</span></div></div>
       <div class="skill-card"><h4>DevOps · CI/CD · Frameworks</h4><div class="chips"><span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">BitBucket</span><span class="chip">Jira</span><span class="chip">Streamlit</span><span class="chip">Flask</span></div></div>
     </div>
+    <div class="lineage reveal" id="lineage" aria-live="polite"><span>▸ click any skill to trace its lineage: which projects it actually shipped in</span></div>
   </div>
 </section>
 
@@ -1139,14 +1537,33 @@
       <span class="sec-tag">certifications</span>
       <h2 class="sec-title">Verified credentials</h2>
     </div>
-    <div class="certs stagger">
-      <a class="cert" href="https://www.credly.com/badges/e889e399-9fb2-4b11-97e5-be2a27c1a1ee/public_url" target="_blank" rel="noopener"><span class="nm">AWS Data Engineer (Associate)</span><span class="dt">Oct 2025</span></a>
-      <a class="cert" href="https://achieve.snowflake.com/840f0f47-fb6e-47d8-a7a8-bf2b164bc20f#acc.unCD8kyL" target="_blank" rel="noopener"><span class="nm">Snowflake SnowPro Core</span><span class="dt">Nov 2024</span></a>
-      <div class="cert"><span class="nm">AWS AI Practitioner</span><span class="dt">Apr 2025</span></div>
-      <a class="cert" href="https://achieve.snowflake.com/6961e478-ea5e-4d00-9029-c9603397830f#acc.7fomhVYP" target="_blank" rel="noopener"><span class="nm">SnowPro Specialty: Snowpark</span><span class="dt">2025</span></a>
-      <a class="cert" href="https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/182573470" target="_blank" rel="noopener"><span class="nm">dbt Analytics Engineer</span><span class="dt">2026</span></a>
-      <a class="cert" href="https://achieve.snowflake.com/ccd217e8-535c-4046-845a-b417cd6dea0d#acc.muFXAVDB" target="_blank" rel="noopener"><span class="nm">SnowPro Specialty: Native App</span><span class="dt">2025</span></a>
-      <a class="cert" href="https://www.credly.com/badges/14bcfd61-bb1c-44bb-a59a-4c4989bff3fd/public_url" target="_blank" rel="noopener"><span class="nm">Claude Certified Architect — Foundations</span><span class="dt">2026</span></a>
+    <div class="cert-vault" id="certVault">
+      <button class="folder" id="folderBtn" aria-expanded="false" aria-controls="certWin">
+        <span class="folder-back" aria-hidden="true"></span>
+        <span class="paper p1" aria-hidden="true"></span><span class="paper p2" aria-hidden="true"></span><span class="paper p3" aria-hidden="true"></span>
+        <span class="folder-front">
+          <span class="folder-label">certifications/</span>
+          <span class="folder-meta">7 files · click to open</span>
+        </span>
+      </button>
+      <p class="folder-hint" id="folderHint">7 credentials · AWS · Snowflake · dbt · Anthropic</p>
+      <div class="cert-win" id="certWin" hidden>
+        <div class="cw-bar">
+          <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="cw-path">~/hitesh/<b>certifications</b></span>
+          <span class="cw-count">7 items · 6 verified</span>
+          <button class="cw-close" id="folderClose" aria-label="Close certifications folder">close folder ✕</button>
+        </div>
+        <div class="certs" id="certGrid">
+          <a class="cert file" data-issuer="aws" href="https://www.credly.com/badges/e889e399-9fb2-4b11-97e5-be2a27c1a1ee/public_url" target="_blank" rel="noopener"><span class="ficon" aria-hidden="true"><i>AWS</i></span><span class="nm">AWS Data Engineer (Associate)</span><span class="fn">AWS_Data_Engineer_Associate.pdf</span><span class="dt">Oct 2025</span></a>
+          <a class="cert file" data-issuer="snow" href="https://achieve.snowflake.com/840f0f47-fb6e-47d8-a7a8-bf2b164bc20f#acc.unCD8kyL" target="_blank" rel="noopener"><span class="ficon" aria-hidden="true"><i>SNOW</i></span><span class="nm">Snowflake SnowPro Core</span><span class="fn">Snowflake_SnowPro_Core.pdf</span><span class="dt">Nov 2024</span></a>
+          <div class="cert file" data-issuer="aws"><span class="ficon" aria-hidden="true"><i>AWS</i></span><span class="nm">AWS AI Practitioner</span><span class="fn">AWS_AI_Practitioner.pdf</span><span class="dt">Apr 2025</span></div>
+          <a class="cert file" data-issuer="snow" href="https://achieve.snowflake.com/6961e478-ea5e-4d00-9029-c9603397830f#acc.7fomhVYP" target="_blank" rel="noopener"><span class="ficon" aria-hidden="true"><i>SNOW</i></span><span class="nm">SnowPro Specialty: Snowpark</span><span class="fn">SnowPro_Specialty_Snowpark.pdf</span><span class="dt">2025</span></a>
+          <a class="cert file" data-issuer="dbt" href="https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/182573470" target="_blank" rel="noopener"><span class="ficon" aria-hidden="true"><i>DBT</i></span><span class="nm">dbt Analytics Engineer</span><span class="fn">dbt_Analytics_Engineer.pdf</span><span class="dt">2026</span></a>
+          <a class="cert file" data-issuer="snow" href="https://achieve.snowflake.com/ccd217e8-535c-4046-845a-b417cd6dea0d#acc.muFXAVDB" target="_blank" rel="noopener"><span class="ficon" aria-hidden="true"><i>SNOW</i></span><span class="nm">SnowPro Specialty: Native App</span><span class="fn">SnowPro_Specialty_Native_App.pdf</span><span class="dt">2025</span></a>
+          <a class="cert file" data-issuer="anth" href="https://www.credly.com/badges/14bcfd61-bb1c-44bb-a59a-4c4989bff3fd/public_url" target="_blank" rel="noopener"><span class="ficon" aria-hidden="true"><i>CLAUDE</i></span><span class="nm">Claude Certified Architect — Foundations</span><span class="fn">Claude_Certified_Architect_Foundations.pdf</span><span class="dt">2026</span></a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1171,6 +1588,20 @@
     <span>Bengaluru, India · Built with intent.</span>
   </div>
 </footer>
+
+<div class="cmdk-overlay" id="cmdk" role="dialog" aria-modal="true" aria-label="Command palette">
+  <div class="cmdk">
+    <div class="cmdk-input-row">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input class="cmdk-input" id="cmdkInput" placeholder="Search sections, projects, skills, actions…" role="combobox" aria-expanded="true" aria-controls="cmdkList" aria-autocomplete="list" autocomplete="off" spellcheck="false">
+      <kbd>esc</kbd>
+    </div>
+    <div class="cmdk-list" id="cmdkList" role="listbox"></div>
+    <div class="cmdk-foot"><span><kbd>↑</kbd><kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> select</span><span><kbd>/</kbd> open anywhere</span></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="trace-pill" id="tracePill"><span id="traceTxt"></span><button id="traceClear" aria-label="Clear lineage">clear ✕</button></div>
 
 <button class="to-top" id="toTop" aria-label="Back to top" title="Back to top">
   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
@@ -1394,6 +1825,611 @@
       shell.addEventListener('transitionend',done);
       setTimeout(release,600);
     });
+  });
+
+  /* ================================================================
+     V4 interactive layer
+     ================================================================ */
+  const isMac=/Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent);
+  if(!isMac) document.querySelectorAll('.mod-key').forEach(k=>k.textContent=k.textContent.replace('⌘','Ctrl '));
+  const esc=v=>String(v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const smooth=reduceMotion?'auto':'smooth';
+
+  const toastEl=document.getElementById('toast');
+  let toastT;
+  function toast(msg){
+    toastEl.textContent=msg;toastEl.classList.add('show');
+    clearTimeout(toastT);toastT=setTimeout(()=>toastEl.classList.remove('show'),2200);
+  }
+  function copy(text,label){
+    const done=()=>toast('✓ '+label+' copied');
+    if(navigator.clipboard) navigator.clipboard.writeText(text).then(done,()=>toast(text));
+    else toast(text);
+  }
+
+  /* ---------- 1. runnable hero pipeline ---------- */
+  const runBtn=document.getElementById('runBtn');
+  const pipeLog=document.getElementById('pipeLog');
+  const heroSvg=document.querySelector('.pipeline-svg');
+  let running=false, autoRan=false;
+  const RUN_SCRIPT=[
+    [0,  'dim','$ dbt build --select trusted_marts --target prod'],
+    [260,'',   'Running with dbt=1.10 · adapter=snowflake · warehouse=TRANSFORM_WH'],
+    [320,'',   'Found <span class="hl">152 models</span>, 418 data tests, 6 snapshots, 3 sources', 0],
+    [420,'',   '1 of 7 source freshness <span class="hl">raw.finance</span> ........ <span class="ok">[PASS 0.4s]</span>', 0],
+    [260,'',   '2 of 7 source freshness <span class="hl">raw.gtm</span> ............ <span class="ok">[PASS 0.3s]</span>'],
+    [260,'',   '3 of 7 source freshness <span class="hl">raw.cx</span> ............. <span class="ok">[PASS 0.3s]</span>'],
+    [460,'',   '4 of 7 build <span class="hl">dbt_models</span> (incremental · SCD2) ... <span class="ok">[SUCCESS 2.1s]</span>', 1],
+    [420,'',   '     418 of 418 tests ................................. <span class="ok">[PASS]</span>'],
+    [420,'',   '5 of 7 build <span class="hl">marts.em</span> ...................... <span class="ok">[SUCCESS 0.9s]</span>', 2],
+    [240,'',   '6 of 7 build <span class="hl">marts.gtm</span> ..................... <span class="ok">[SUCCESS 0.8s]</span>'],
+    [240,'',   '7 of 7 refresh <span class="hl">dashboards</span> .................. <span class="ok">[SUCCESS 0.5s]</span>'],
+    [380,'ok', 'Completed successfully · PASS=425 WARN=0 ERROR=0 · <span class="am">~30% less compute</span>'],
+  ];
+  function logLine(cls,html){
+    const d=document.createElement('div');d.className='ln '+cls;d.innerHTML=html;
+    pipeLog.appendChild(d);
+    while(pipeLog.children.length>6) pipeLog.firstChild.remove();
+  }
+  function lightStep(n){
+    heroSvg.querySelectorAll('g[data-step]').forEach(g=>{
+      const st=+g.dataset.step;
+      g.classList.toggle('lit',st===n);
+      if(st<n) g.classList.add('ok','lit');
+    });
+  }
+  function runPipeline(){
+    if(running) return; running=true;
+    runBtn.disabled=true;runBtn.innerHTML='<span class="spin"></span> running';
+    pipeLog.innerHTML='';
+    heroSvg.querySelectorAll('g[data-step]').forEach(g=>g.classList.remove('lit','ok'));
+    heroSvg.classList.add('running');
+    let t=0;
+    RUN_SCRIPT.forEach(([dt,cls,html,step])=>{
+      t+=reduceMotion?0:dt;
+      setTimeout(()=>{logLine(cls,html);if(step!==undefined) lightStep(step);},t);
+    });
+    setTimeout(()=>{
+      heroSvg.querySelectorAll('g[data-step]').forEach(g=>g.classList.add('ok','lit'));
+      setTimeout(()=>{heroSvg.classList.remove('running');heroSvg.querySelectorAll('g[data-step]').forEach(g=>g.classList.remove('lit'))},900);
+      runBtn.disabled=false;runBtn.innerHTML='<span class="ri">↻</span> rerun';running=false;
+    },t+200);
+  }
+  runBtn.addEventListener('click',()=>{autoRan=true;runPipeline()});
+  // the first run happens on its own, right after the command finishes typing
+  if(!reduceMotion){
+    setTimeout(()=>{
+      if(!autoRan && scrollY<innerHeight*.6){autoRan=true;runPipeline();}
+    },42*32+900);
+  }
+
+  /* ---------- 2. the career database ---------- */
+  const DB={
+    projects:{
+      desc:'every engagement, client and side project',
+      cols:{id:'number',project:'varchar',company:'varchar',client:'varchar',started:'number',ended:'number',status:'varchar',domain:'varchar',stack:'varchar',impact:'varchar'},
+      rows:[
+        {id:1,project:'Data Foundation & AI Deployment',company:'phData',client:'CrowdStrike',started:2026,ended:null,status:'pre-production',domain:'Finance',stack:'dbt, Snowflake, Airflow, Python, SQL, Claude Code, MCP, Git, BitBucket, Jira',impact:'~30% lower Snowflake compute; monolith → staging/transform/serving'},
+        {id:2,project:'Enterprise Data Platform Modernization',company:'phData',client:'Workday',started:2024,ended:2026,status:'in production',domain:'Finance',stack:'dbt, Snowflake, SQL, Python, Snowflake Cortex, Claude Code, Cursor, MCP, Git, GitHub, Jira',impact:'150+ models refactored; DQ root-cause 1–2 days → 1–3 hrs'},
+        {id:3,project:'Prism: AI-built data pipelines',company:'Personal',client:null,started:2026,ended:null,status:'working prototype',domain:'AI Tooling',stack:'React 19, TypeScript, Vite, Tailwind, FastAPI, Python, LangChain, LangGraph, MCP, Claude Code, Git, WebSockets, SQLite',impact:'chat-driven pipeline stages with a real per-call approval gate'},
+        {id:4,project:'MCP Servers: Jira, SQL Server, Snowflake',company:'phData',client:null,started:2025,ended:2026,status:'in production',domain:'AI Tooling',stack:'Python, MCP SDK, REST APIs, Claude Code, Git',impact:'3 production MCP servers powering automated RCA and req → PR'},
+      ]
+    },
+    skills:{
+      desc:'the toolkit, by category',
+      cols:{skill:'varchar',category:'varchar',used_in_projects:'number'},
+      rows:[]
+    },
+    certs:{
+      desc:'verified credentials',
+      cols:{cert:'varchar',issuer:'varchar',year:'number',verified_link:'boolean'},
+      rows:[
+        {cert:'AWS Data Engineer (Associate)',issuer:'AWS',year:2025,verified_link:true},
+        {cert:'Snowflake SnowPro Core',issuer:'Snowflake',year:2024,verified_link:true},
+        {cert:'AWS AI Practitioner',issuer:'AWS',year:2025,verified_link:false},
+        {cert:'SnowPro Specialty: Snowpark',issuer:'Snowflake',year:2025,verified_link:true},
+        {cert:'dbt Analytics Engineer',issuer:'dbt Labs',year:2026,verified_link:true},
+        {cert:'SnowPro Specialty: Native App',issuer:'Snowflake',year:2025,verified_link:true},
+        {cert:'Claude Certified Architect — Foundations',issuer:'Anthropic',year:2026,verified_link:true},
+      ]
+    },
+    metrics:{
+      desc:'headline numbers',
+      cols:{metric:'varchar',value:'varchar'},
+      rows:[
+        {metric:'dbt models refactored',value:'150+'},
+        {metric:'incident RCA speed-up',value:'16×'},
+        {metric:'production MCP servers',value:'3'},
+        {metric:'Snowflake compute saved',value:'~30%'},
+        {metric:'cloud & data certs',value:'7'},
+      ]
+    },
+    contact:{
+      desc:'how to reach me',
+      cols:{channel:'varchar',value:'varchar',response_time:'varchar'},
+      rows:[
+        {channel:'email',value:'hiteshg1334@gmail.com',response_time:'< 24h'},
+        {channel:'linkedin',value:'linkedin.com/in/hithesh-patel',response_time:'< 48h'},
+        {channel:'phone',value:'+91 63639 97532',response_time:'business hours'},
+        {channel:'location',value:'Bengaluru, India',response_time:null},
+      ]
+    }
+  };
+  // skills come straight from the page so the table never drifts from the section
+  const norm=s=>s.trim().toLowerCase();
+  const projectCards=[...document.querySelectorAll('#work .role-card')].map(card=>({
+    card, name:card.querySelector('.role-title').textContent.split(':')[0].trim(),
+    chips:[...card.querySelectorAll('.stack-chip')]
+  }));
+  const ALIAS={mcp:['mcp','mcp sdk']};
+  function projectsUsing(skill){
+    const keys=ALIAS[norm(skill)]||[norm(skill)];
+    return projectCards.filter(p=>p.chips.some(c=>keys.includes(norm(c.textContent))));
+  }
+  document.querySelectorAll('#skills .skill-card').forEach(card=>{
+    const cat=card.querySelector('h4').textContent;
+    card.querySelectorAll('.chip').forEach(ch=>DB.skills.rows.push({
+      skill:ch.textContent,category:cat,used_in_projects:projectsUsing(ch.textContent).length
+    }));
+  });
+
+  /* ---------- 3. a small, honest SQL engine ---------- */
+  const KW=new Set(['SELECT','FROM','WHERE','AND','OR','NOT','LIKE','ILIKE','IN','IS','NULL','ORDER','BY','ASC','DESC','LIMIT','GROUP','AS','DISTINCT','SHOW','TABLES','DESCRIBE','TABLE','TRUE','FALSE','HELP']);
+  class SqlError extends Error{}
+  function tokenize(src){
+    const toks=[], re=/\s*(?:(--[^\n]*)|('(?:[^']|'')*')|(\d+(?:\.\d+)?)|([A-Za-z_][A-Za-z0-9_.]*)|(<=|>=|<>|!=|=|<|>|,|\(|\)|\*|;))/y;
+    while(re.lastIndex<src.length){
+      const at=re.lastIndex, m=re.exec(src);
+      if(!m){
+        const rest=src.slice(at).trim();
+        if(!rest) break;
+        throw new SqlError(`syntax error: unexpected '${rest[0]}'`+(rest[0]==='"'?' (use single quotes for strings)':''));
+      }
+      if(m[1]) continue;
+      if(m[2]!==undefined) toks.push({t:'str',v:m[2].slice(1,-1).replace(/''/g,"'")});
+      else if(m[3]) toks.push({t:'num',v:+m[3]});
+      else if(m[4]){
+        const w=m[4].includes('.')?m[4].split('.').pop():m[4], up=w.toUpperCase();
+        toks.push(KW.has(up)?{t:'kw',v:up}:{t:'id',v:w});
+      }
+      else toks.push({t:'op',v:m[5]});
+    }
+    return toks;
+  }
+  function parse(toks){
+    let i=0;
+    const show=t=>t.t==='str'?`'${t.v}'`:t.v;
+    const is=v=>toks[i]&&(toks[i].t==='kw'||toks[i].t==='op')&&toks[i].v===v;
+    const accept=v=>is(v)?(i++,true):false;
+    const where=()=>toks[i]?` near '${show(toks[i])}'`:' at end of query';
+    const expect=v=>{if(!accept(v)) throw new SqlError(`syntax error: expected ${v}${where()}`)};
+    const ident=()=>{
+      const t=toks[i];
+      if(!t||t.t!=='id') throw new SqlError(`syntax error: expected a name${where()}`);
+      i++;return t.v.toLowerCase();
+    };
+    const end=()=>{accept(';');if(i<toks.length) throw new SqlError(`syntax error: unexpected '${show(toks[i])}'`)};
+
+    if(!toks.length) throw new SqlError('empty query: try SHOW TABLES');
+    if(accept('HELP')){end();return{type:'help'}}
+    if(accept('SHOW')){expect('TABLES');end();return{type:'show'}}
+    if(accept('DESCRIBE')||accept('DESC')){accept('TABLE');const table=ident();end();return{type:'describe',table}}
+    expect('SELECT');
+    const distinct=accept('DISTINCT');
+    const cols=[];
+    do{
+      let item;
+      if(accept('*')) item={star:true};
+      else if(toks[i]&&toks[i].t==='id'&&toks[i].v.toUpperCase()==='COUNT'&&toks[i+1]&&toks[i+1].v==='('){
+        i+=2;const arg=accept('*')?'*':ident();expect(')');
+        item={agg:'count',arg,name:`count(${arg})`};
+      }else{const c=ident();item={col:c,name:c};}
+      if(accept('AS')) item.name=ident();
+      else if(!item.star&&toks[i]&&toks[i].t==='id') item.name=ident();
+      cols.push(item);
+    }while(accept(','));
+    expect('FROM');
+    const table=ident();
+    if(accept('AS')) ident(); else if(toks[i]&&toks[i].t==='id') i++;
+    let filter=null,group=null,order=[],limit=null;
+    if(accept('WHERE')) filter=orExpr();
+    if(accept('GROUP')){expect('BY');group=ident();}
+    if(accept('ORDER')){
+      expect('BY');
+      do{
+        let key;
+        if(toks[i]&&toks[i].t==='num'){key={pos:toks[i].v};i++;}
+        else if(toks[i]&&toks[i].t==='id'&&toks[i].v.toUpperCase()==='COUNT'){i++;expect('(');const a=accept('*')?'*':ident();expect(')');key={name:`count(${a})`};}
+        else key={name:ident()};
+        key.desc=accept('DESC')?true:(accept('ASC'),false);
+        order.push(key);
+      }while(accept(','));
+    }
+    if(accept('LIMIT')){
+      const n=toks[i];
+      if(!n||n.t!=='num') throw new SqlError(`syntax error: LIMIT needs a number${where()}`);
+      limit=n.v;i++;
+    }
+    end();
+    return{type:'select',distinct,cols,table,filter,group,order,limit};
+
+    function orExpr(){let l=andExpr();while(accept('OR')){const r=andExpr(),a=l;l={op:'or',a,b:r};}return l;}
+    function andExpr(){let l=notExpr();while(accept('AND')){const r=notExpr(),a=l;l={op:'and',a,b:r};}return l;}
+    function notExpr(){return accept('NOT')?{op:'not',a:notExpr()}:primary();}
+    function primary(){
+      if(accept('(')){const e=orExpr();expect(')');return e;}
+      const left=operand();
+      if(accept('IS')){const neg=accept('NOT');expect('NULL');return{op:neg?'notnull':'isnull',a:left};}
+      const neg=accept('NOT');
+      if(accept('LIKE')||accept('ILIKE')){const r=operand();return wrap({op:'like',a:left,b:r});}
+      if(accept('IN')){
+        expect('(');const list=[];
+        do list.push(operand()); while(accept(','));
+        expect(')');return wrap({op:'in',a:left,list});
+      }
+      if(neg) throw new SqlError(`syntax error: expected LIKE or IN after NOT${where()}`);
+      const t=toks[i];
+      if(t&&t.t==='op'&&['=','!=','<>','<','>','<=','>='].includes(t.v)){i++;return{op:t.v,a:left,b:operand()};}
+      return{op:'truthy',a:left};
+      function wrap(e){return neg?{op:'not',a:e}:e;}
+    }
+    function operand(){
+      const t=toks[i];
+      if(!t) throw new SqlError('syntax error: unexpected end of query');
+      if(t.t==='str'||t.t==='num'){i++;return{lit:t.v};}
+      if(accept('NULL')) return{lit:null};
+      if(accept('TRUE')) return{lit:true};
+      if(accept('FALSE')) return{lit:false};
+      return{col:ident()};
+    }
+  }
+  function execute(q){
+    if(q.type==='help'||q.type==='show'){
+      return{headers:['table','rows','description'],rows:Object.entries(DB).map(([k,v])=>[k,v.rows.length,v.desc])};
+    }
+    const tbl=DB[q.table];
+    if(!tbl) throw new SqlError(`Object '${q.table.toUpperCase()}' does not exist. Try SHOW TABLES`);
+    if(q.type==='describe') return{headers:['column','type'],rows:Object.entries(tbl.cols)};
+    const check=c=>{if(!(c in tbl.cols)) throw new SqlError(`invalid identifier '${c.toUpperCase()}' · ${q.table} has: ${Object.keys(tbl.cols).join(', ')}`)};
+    const val=(o,row)=>'lit' in o?o.lit:row[o.col];
+    const walk=e=>{if(!e)return;if(e.col)check(e.col);['a','b'].forEach(k=>e[k]&&walk(e[k]));(e.list||[]).forEach(walk)};
+    walk(q.filter);
+    const lc=v=>typeof v==='string'?v.toLowerCase():v;
+    const cmp=(x,y)=>x==null&&y==null?0:x==null?1:y==null?-1:(typeof x==='number'&&typeof y==='number'?x-y:String(x).localeCompare(String(y),undefined,{numeric:true,sensitivity:'base'}));
+    function test(e,row){
+      switch(e.op){
+        case 'or':return test(e.a,row)||test(e.b,row);
+        case 'and':return test(e.a,row)&&test(e.b,row);
+        case 'not':return !test(e.a,row);
+        case 'isnull':return val(e.a,row)==null;
+        case 'notnull':return val(e.a,row)!=null;
+        case 'truthy':return !!val(e.a,row);
+        case 'like':{
+          const v=val(e.a,row),p=val(e.b,row);if(v==null||p==null)return false;
+          const rx=new RegExp('^'+String(p).replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/%/g,'.*').replace(/_/g,'.')+'$','is');
+          return rx.test(String(v));
+        }
+        case 'in':{const v=lc(val(e.a,row));return e.list.some(o=>lc(val(o,row))===v);}
+        default:{
+          const x=val(e.a,row),y=val(e.b,row);if(x==null||y==null)return false;
+          const d=cmp(lc(x),lc(y));
+          return{'=':d===0,'!=':d!==0,'<>':d!==0,'<':d<0,'>':d>0,'<=':d<=0,'>=':d>=0}[e.op];
+        }
+      }
+    }
+    let rows=tbl.rows.filter(r=>!q.filter||test(q.filter,r));
+    const hasAgg=q.cols.some(c=>c.agg);
+    let headers=[],out=[];
+    if(q.group||hasAgg){
+      if(q.group) check(q.group);
+      q.cols.forEach(c=>{
+        if(c.star) throw new SqlError('SELECT * is not allowed with GROUP BY or COUNT');
+        if(c.col){check(c.col);if(c.col!==q.group) throw new SqlError(`'${c.col.toUpperCase()}' is not a valid group by expression`);}
+        if(c.agg&&c.arg!=='*') check(c.arg);
+      });
+      const groups=new Map();
+      rows.forEach(r=>{const k=q.group?r[q.group]:'_';if(!groups.has(k))groups.set(k,[]);groups.get(k).push(r);});
+      if(!q.group&&!groups.size) groups.set('_',[]);
+      headers=q.cols.map(c=>c.name);
+      groups.forEach(g=>{
+        out.push({src:g[0]||{},vals:q.cols.map(c=>c.agg?(c.arg==='*'?g.length:g.filter(r=>r[c.arg]!=null).length):g[0][c.col])});
+      });
+    }else{
+      q.cols.forEach(c=>{if(c.col)check(c.col)});
+      q.cols.forEach(c=>{if(c.star)headers.push(...Object.keys(tbl.cols));else headers.push(c.name);});
+      out=rows.map(r=>({src:r,vals:q.cols.flatMap(c=>c.star?Object.keys(tbl.cols).map(k=>r[k]):[r[c.col]])}));
+    }
+    if(q.distinct){const seen=new Set();out=out.filter(o=>{const k=JSON.stringify(o.vals);return seen.has(k)?false:(seen.add(k),true)});}
+    if(q.order.length){
+      const getters=q.order.map(k=>{
+        if(k.pos){if(k.pos<1||k.pos>headers.length) throw new SqlError(`ORDER BY position ${k.pos} is out of range`);return o=>o.vals[k.pos-1];}
+        const hi=headers.indexOf(k.name);
+        if(hi>=0) return o=>o.vals[hi];
+        const alias=q.cols.find(c=>c.col===k.name);
+        if(k.name in tbl.cols&&!(q.group||hasAgg)) return o=>o.src[k.name];
+        if(alias) return o=>o.src[alias.col];
+        throw new SqlError(`invalid identifier '${k.name.toUpperCase()}' in ORDER BY`);
+      });
+      out.sort((a,b)=>{for(let j=0;j<getters.length;j++){const d=cmp(getters[j](a),getters[j](b));if(d)return q.order[j].desc?-d:d;}return 0;});
+    }
+    if(q.limit!=null) out=out.slice(0,q.limit);
+    return{headers,rows:out.map(o=>o.vals)};
+  }
+  function runSQL(src){
+    if(/^\s*(drop|delete|update|insert|truncate|alter|create|grant|merge)\b/i.test(src))
+      throw new SqlError('Insufficient privileges: role RECRUITER is read-only on HITESH_DB. (Nice try. Hire me and I\'ll grant you write access.)');
+    return execute(parse(tokenize(src)));
+  }
+
+  /* ---------- 4. the SQL console UI ---------- */
+  const sqlInput=document.getElementById('sqlInput');
+  const sqlHl=document.getElementById('sqlHl');
+  const sqlGutter=document.getElementById('sqlGutter');
+  const sqlOut=document.getElementById('sqlOut');
+  const sqlStatus=document.getElementById('sqlStatus');
+  const PRESETS=[
+    ['Where did I use dbt?',"SELECT client, project, status\nFROM projects\nWHERE stack LIKE '%dbt%'\nORDER BY started DESC;"],
+    ["What's in production?","SELECT project, impact\nFROM projects\nWHERE status = 'in production';"],
+    ['Certs by issuer',"SELECT issuer, COUNT(*) AS certs\nFROM certs\nGROUP BY issuer\nORDER BY certs DESC;"],
+    ['Most-used skills',"SELECT skill, category, used_in_projects\nFROM skills\nWHERE used_in_projects >= 2\nORDER BY used_in_projects DESC, skill;"],
+    ['AI work',"SELECT project, stack\nFROM projects\nWHERE domain = 'AI Tooling' OR stack LIKE '%Claude%';"],
+    ['Hire me',"SELECT channel, value, response_time\nFROM contact\nWHERE value IS NOT NULL;"],
+  ];
+  const FN=new Set(['COUNT']);
+  function highlight(src){
+    return src.replace(/(--[^\n]*)|('(?:[^']|'')*'?)|(\b\d+(?:\.\d+)?\b)|([A-Za-z_][A-Za-z0-9_.]*)|([<>=!*,();]+)|([^A-Za-z0-9_'\-<>=!*,();]+|-)/g,
+      (m,cm,st,nu,id,op)=>{
+        if(cm) return `<span class="tk-cm">${esc(cm)}</span>`;
+        if(st) return `<span class="tk-str">${esc(st)}</span>`;
+        if(nu) return `<span class="tk-num">${nu}</span>`;
+        if(id){const u=id.toUpperCase();return KW.has(u)?`<span class="tk-kw">${esc(id)}</span>`:FN.has(u)?`<span class="tk-fn">${esc(id)}</span>`:esc(id);}
+        if(op) return `<span class="tk-op">${esc(op)}</span>`;
+        return esc(m);
+      })+'\n';
+  }
+  function syncEditor(){
+    sqlHl.innerHTML=highlight(sqlInput.value);
+    const n=sqlInput.value.split('\n').length;
+    sqlGutter.innerHTML=Array.from({length:n},(_,i)=>i+1).join('<br>');
+  }
+  sqlInput.addEventListener('input',syncEditor);
+  sqlInput.addEventListener('keydown',e=>{
+    if(e.key==='Enter'&&(e.metaKey||e.ctrlKey)){e.preventDefault();runConsole();}
+    else if(e.key==='Tab'&&!e.shiftKey){
+      e.preventDefault();
+      const s=sqlInput.selectionStart;
+      sqlInput.setRangeText('  ',s,sqlInput.selectionEnd,'end');syncEditor();
+    }
+  });
+  function cell(v){
+    if(v==null) return '<td class="null">NULL</td>';
+    if(typeof v==='number') return `<td class="n">${v}</td>`;
+    if(typeof v==='boolean') return `<td class="${v?'t':'f'}">${v}</td>`;
+    return `<td>${esc(v)}</td>`;
+  }
+  function runConsole(){
+    const src=sqlInput.value;
+    const t0=performance.now();
+    try{
+      const res=runSQL(src);
+      const ms=(performance.now()-t0).toFixed(2);
+      sqlStatus.innerHTML=`<b>✓ ${res.rows.length} row${res.rows.length===1?'':'s'}</b> · ${ms} ms · 0 credits used`;
+      if(!res.rows.length){sqlOut.innerHTML='<div class="sql-msg">Query produced no results. Loosen the WHERE clause?</div>';return;}
+      sqlOut.innerHTML=`<table><thead><tr><th class="rn">#</th>${res.headers.map((h,j)=>`<th${typeof res.rows[0][j]==='number'?' style="text-align:right"':''}>${esc(h)}</th>`).join('')}</tr></thead><tbody>${
+        res.rows.map((r,i)=>`<tr style="animation-delay:${Math.min(i,12)*35}ms"><td class="rn">${i+1}</td>${r.map(cell).join('')}</tr>`).join('')
+      }</tbody></table>`;
+    }catch(err){
+      if(!(err instanceof SqlError)) console.error(err);
+      sqlStatus.innerHTML='<span class="err">✕ query failed</span>';
+      sqlOut.innerHTML=`<div class="sql-msg"><span class="e">SQL compilation error:</span><br>${esc(err.message)}<br><br>try <code data-q="SHOW TABLES;">SHOW TABLES;</code> or <code data-q="DESCRIBE projects;">DESCRIBE projects;</code></div>`;
+    }
+  }
+  sqlOut.addEventListener('click',e=>{const c=e.target.closest('code[data-q]');if(c)loadQuery(c.dataset.q,true);});
+  document.getElementById('sqlRun').addEventListener('click',runConsole);
+
+  let typingJob=0;
+  function loadQuery(q,animate){
+    const job=++typingJob;
+    if(!animate||reduceMotion){sqlInput.value=q;syncEditor();runConsole();return;}
+    sqlInput.value='';syncEditor();
+    sqlStatus.textContent='typing…';
+    let i=0;
+    (function step(){
+      if(job!==typingJob) return;
+      i=Math.min(q.length,i+2);
+      sqlInput.value=q.slice(0,i);syncEditor();
+      if(i<q.length) setTimeout(step,14); else runConsole();
+    })();
+  }
+  const presetBox=document.getElementById('sqlPresets');
+  PRESETS.forEach(([label,q])=>{
+    const b=document.createElement('button');b.className='preset';b.textContent=label;
+    b.addEventListener('click',()=>loadQuery(q,true));
+    presetBox.appendChild(b);
+  });
+  // schema browser
+  const side=document.getElementById('sqlSide');
+  const tblIcon='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>';
+  Object.entries(DB).forEach(([name,t])=>{
+    const w=document.createElement('div');w.className='tbl';
+    w.innerHTML=`<button class="tbl-btn">${tblIcon}<span>${name}</span><span class="cnt">${t.rows.length}</span></button>
+      <div class="tbl-cols">${Object.entries(t.cols).map(([c,ty])=>`<span data-col="${c}">${c}<em>${ty}</em></span>`).join('')}</div>`;
+    w.querySelector('.tbl-btn').addEventListener('click',()=>{
+      side.querySelectorAll('.tbl.open').forEach(o=>o!==w&&o.classList.remove('open'));
+      w.classList.toggle('open');
+      loadQuery(`SELECT *\nFROM ${name}\nLIMIT 10;`,true);
+    });
+    w.querySelectorAll('.tbl-cols span').forEach(s=>s.addEventListener('click',()=>{
+      const c=s.dataset.col;
+      loadQuery(`SELECT ${c}, COUNT(*) AS n\nFROM ${name}\nGROUP BY ${c}\nORDER BY n DESC;`,true);
+    }));
+    side.appendChild(w);
+  });
+  // start with a query already run, so the section is never an empty box
+  sqlInput.value=PRESETS[0][1];syncEditor();runConsole();
+
+  /* ---------- 5. skill lineage ---------- */
+  const lineageBox=document.getElementById('lineage');
+  const work=document.getElementById('work');
+  const tracePill=document.getElementById('tracePill');
+  const traceTxt=document.getElementById('traceTxt');
+  let tracing=null;
+  function clearTrace(){
+    tracing=null;work.classList.remove('tracing');tracePill.classList.remove('show');
+    document.querySelectorAll('.lineage-hit').forEach(c=>c.classList.remove('lineage-hit'));
+    document.querySelectorAll('.stack-chip.lineage-on').forEach(c=>c.classList.remove('lineage-on'));
+    document.querySelectorAll('.chip.traceable.on').forEach(c=>c.classList.remove('on'));
+  }
+  function applyTrace(skill,scroll){
+    clearTrace();
+    const hits=projectsUsing(skill);
+    tracing=skill;
+    document.querySelectorAll('.chip.traceable').forEach(c=>c.classList.toggle('on',norm(c.textContent)===norm(skill)));
+    if(!hits.length){
+      lineageBox.innerHTML=`<span class="src">${esc(skill)}</span><span>used in training, certs and earlier work, not in the projects listed above</span>`;
+      return;
+    }
+    const keys=ALIAS[norm(skill)]||[norm(skill)];
+    hits.forEach(p=>{p.card.classList.add('lineage-hit');p.chips.forEach(c=>keys.includes(norm(c.textContent))&&c.classList.add('lineage-on'));});
+    work.classList.add('tracing');
+    lineageBox.innerHTML=`<span class="src">${esc(skill)}</span><span class="arrow-ln"></span>${hits.map(p=>`<span class="dst">${esc(p.name)}</span>`).join('')}<button class="go" id="lineageGo">view in experience ↑</button>`;
+    document.getElementById('lineageGo').addEventListener('click',()=>goTrace());
+    traceTxt.textContent=`lineage · ${skill} → ${hits.length} project${hits.length>1?'s':''}`;
+    if(scroll) goTrace();
+  }
+  function goTrace(){
+    const first=work.querySelector('.role-card.lineage-hit');
+    if(first) first.scrollIntoView({behavior:smooth,block:'center'});
+    tracePill.classList.add('show');
+  }
+  document.querySelectorAll('#skills .chip').forEach(ch=>{
+    ch.classList.add('traceable');ch.tabIndex=0;ch.setAttribute('role','button');
+    ch.setAttribute('aria-label',`Trace where ${ch.textContent} was used`);
+    const go=()=>tracing&&norm(tracing)===norm(ch.textContent)?(clearTrace(),lineageBox.innerHTML='<span>▸ click any skill to trace its lineage: which projects it actually shipped in</span>'):applyTrace(ch.textContent,false);
+    ch.addEventListener('click',go);
+    ch.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});
+  });
+  document.getElementById('traceClear').addEventListener('click',()=>{clearTrace();lineageBox.innerHTML='<span>▸ click any skill to trace its lineage: which projects it actually shipped in</span>';});
+  // the "view" pill only makes sense while the experience section is on screen
+  new IntersectionObserver(es=>es.forEach(e=>{if(tracing&&work.classList.contains('tracing'))tracePill.classList.toggle('show',e.isIntersecting)}),{threshold:0.05}).observe(work);
+
+  /* ---------- 5b. certifications folder ---------- */
+  const folderBtn=document.getElementById('folderBtn');
+  const folderHint=document.getElementById('folderHint');
+  const certWin=document.getElementById('certWin');
+  function openFolder(){
+    if(!certWin.hidden) return;
+    folderBtn.setAttribute('aria-expanded','true');
+    folderBtn.classList.add('opening');
+    setTimeout(()=>{
+      folderBtn.hidden=true;folderHint.hidden=true;certWin.hidden=false;
+      certWin.querySelectorAll('.cert.file').forEach((f,i)=>f.style.animationDelay=(i*70)+'ms');
+      document.getElementById('folderClose').focus({preventScroll:true});
+    },reduceMotion?0:620);
+  }
+  function closeFolder(){
+    certWin.hidden=true;folderBtn.hidden=false;folderHint.hidden=false;
+    folderBtn.classList.remove('opening');folderBtn.setAttribute('aria-expanded','false');
+    folderBtn.focus({preventScroll:true});
+  }
+  folderBtn.addEventListener('click',openFolder);
+  document.getElementById('folderClose').addEventListener('click',closeFolder);
+
+  /* ---------- 6. ⌘K command palette ---------- */
+  const cmdk=document.getElementById('cmdk');
+  const cmdkInput=document.getElementById('cmdkInput');
+  const cmdkList=document.getElementById('cmdkList');
+  const goto=id=>()=>document.getElementById(id).scrollIntoView({behavior:smooth});
+  const COMMANDS=[
+    ...[['About','about','§'],['Experience','work','§'],['Query my résumé (live SQL)','query','⌗'],['Skills','skills','§'],['Certifications','certs','§'],['Contact','contact','§']]
+      .map(([l,id,ic])=>({group:'Go to',label:l,ic,hint:'#'+id,run:goto(id)})),
+    ...projectCards.map(p=>({group:'Projects',label:p.name+': '+p.card.querySelector('.role-title').textContent.split(':').slice(1).join(':').trim(),ic:'◆',hint:p.card.querySelector('.badge-prod').textContent,
+      run:()=>{p.card.scrollIntoView({behavior:smooth,block:'center'});p.card.animate?.([{boxShadow:'0 0 0 0 rgba(61,90,254,.6)'},{boxShadow:'0 0 0 14px rgba(61,90,254,0)'}],{duration:900,delay:reduceMotion?0:450});}})),
+    {group:'Actions',label:'Run the hero pipeline',ic:'▶',hint:'dbt build',run:()=>{scrollTo({top:0,behavior:smooth});setTimeout(()=>{autoRan=true;runPipeline()},reduceMotion?0:500)}},
+    {group:'Actions',label:'Open certifications folder',ic:'▤',hint:'7 files',run:()=>{goto('certs')();setTimeout(openFolder,reduceMotion?0:500)}},
+    {group:'Actions',label:'Toggle dark / light mode',ic:'◐',hint:'theme',run:()=>themeBtn.click()},
+    {group:'Actions',label:'Copy email address',ic:'@',hint:'hiteshg1334@gmail.com',run:()=>copy('hiteshg1334@gmail.com','Email')},
+    {group:'Actions',label:'Open LinkedIn',ic:'in',hint:'new tab',run:()=>open('https://www.linkedin.com/in/hithesh-patel/','_blank','noopener')},
+    {group:'Actions',label:'Open MCP servers on GitHub',ic:'gh',hint:'new tab',run:()=>open('https://github.com/Data-Engineering-MCP','_blank','noopener')},
+    {group:'Actions',label:'Send an email',ic:'✉',hint:'mailto',run:()=>{location.href='mailto:hiteshg1334@gmail.com'}},
+    ...PRESETS.map(([l,q])=>({group:'SQL queries',label:l,ic:'⌗',hint:'run',run:()=>{goto('query')();setTimeout(()=>loadQuery(q,true),reduceMotion?0:450)}})),
+    ...DB.skills.rows.map(s=>({group:'Trace skill lineage',label:s.skill,ic:'⤳',hint:s.used_in_projects+' project'+(s.used_in_projects===1?'':'s'),run:()=>applyTrace(s.skill,true)})),
+  ];
+  // fuzzy subsequence match: rewards consecutive runs and word starts
+  function fuzzy(q,text){
+    if(!q) return{score:0,idx:[]};
+    const t=text.toLowerCase();let ti=0,score=0,run=0;const idx=[];
+    for(const ch of q){
+      const f=t.indexOf(ch,ti);
+      if(f<0) return null;
+      run=f===ti?run+1:0;
+      score+=1+run*2+(f===0||/[\s:(·-]/.test(t[f-1])?3:0)-Math.min(f-ti,4)*.2;
+      idx.push(f);ti=f+1;
+    }
+    return{score,idx};
+  }
+  let shown=[],sel=0;
+  function renderCmdk(){
+    const q=cmdkInput.value.trim().toLowerCase();
+    shown=COMMANDS.map(c=>{
+      const m=fuzzy(q,c.label)||(q?fuzzy(q,c.group+' '+c.label):null);
+      return m&&{c,m:fuzzy(q,c.label)?m:{score:m.score-4,idx:[]}};
+    }).filter(Boolean);
+    if(q) shown.sort((a,b)=>b.m.score-a.m.score);
+    else shown=shown.filter(x=>x.c.group!=='Trace skill lineage'||['dbt','Snowflake','MCP','Python'].includes(x.c.label));
+    shown=shown.slice(0,q?40:60);
+    sel=Math.min(sel,Math.max(0,shown.length-1));
+    if(!shown.length){cmdkList.innerHTML=`<div class="cmdk-empty">No matches for “${esc(cmdkInput.value)}”.<br>Try “sql”, “dbt”, or “email”.</div>`;return;}
+    let html='',last=null;
+    shown.forEach((x,i)=>{
+      if(!q&&x.c.group!==last){html+=`<div class="cmdk-group">${x.c.group}</div>`;last=x.c.group;}
+      const hl=[...x.c.label].map((ch,j)=>x.m.idx.includes(j)?`<mark>${esc(ch)}</mark>`:esc(ch)).join('');
+      html+=`<div class="cmdk-item" role="option" id="ck${i}" data-i="${i}" aria-selected="${i===sel}"><span class="ic">${x.c.ic}</span><span class="tx">${hl}</span><span class="hn">${esc(q?x.c.group:x.c.hint)}</span></div>`;
+    });
+    cmdkList.innerHTML=html;
+    cmdkInput.setAttribute('aria-activedescendant','ck'+sel);
+  }
+  function moveSel(d){
+    if(!shown.length) return;
+    sel=(sel+d+shown.length)%shown.length;
+    cmdkList.querySelectorAll('.cmdk-item').forEach(el=>el.setAttribute('aria-selected',+el.dataset.i===sel));
+    const el=document.getElementById('ck'+sel);el&&el.scrollIntoView({block:'nearest'});
+    cmdkInput.setAttribute('aria-activedescendant','ck'+sel);
+  }
+  let lastFocus=null;
+  function openCmdk(){
+    lastFocus=document.activeElement;closeMenu();
+    cmdk.classList.add('open');cmdkInput.value='';sel=0;renderCmdk();
+    document.body.style.overflow='hidden';
+    cmdkInput.focus();
+  }
+  function closeCmdk(){
+    cmdk.classList.remove('open');document.body.style.overflow='';
+    if(lastFocus&&lastFocus.focus) lastFocus.focus({preventScroll:true});
+  }
+  function choose(i){const x=shown[i];if(!x)return;closeCmdk();x.c.run();}
+  cmdkInput.addEventListener('input',()=>{sel=0;renderCmdk();});
+  cmdkInput.addEventListener('keydown',e=>{
+    if(e.key==='ArrowDown'){e.preventDefault();moveSel(1);}
+    else if(e.key==='ArrowUp'){e.preventDefault();moveSel(-1);}
+    else if(e.key==='Enter'){e.preventDefault();choose(sel);}
+    else if(e.key==='Tab'){e.preventDefault();moveSel(e.shiftKey?-1:1);}
+  });
+  cmdkList.addEventListener('click',e=>{const it=e.target.closest('.cmdk-item');if(it)choose(+it.dataset.i);});
+  cmdkList.addEventListener('mousemove',e=>{
+    const it=e.target.closest('.cmdk-item');
+    if(it&&+it.dataset.i!==sel){sel=+it.dataset.i;cmdkList.querySelectorAll('.cmdk-item').forEach(el=>el.setAttribute('aria-selected',+el.dataset.i===sel));}
+  });
+  cmdk.addEventListener('click',e=>{if(e.target===cmdk)closeCmdk();});
+  document.getElementById('cmdkBtn').addEventListener('click',openCmdk);
+  addEventListener('keydown',e=>{
+    const typing=/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)||document.activeElement.isContentEditable;
+    if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();cmdk.classList.contains('open')?closeCmdk():openCmdk();}
+    else if(e.key==='/'&&!typing&&!cmdk.classList.contains('open')){e.preventDefault();openCmdk();}
+    else if(e.key==='Escape'){
+      if(cmdk.classList.contains('open')) closeCmdk();
+      else if(tracing) document.getElementById('traceClear').click();
+    }
   });
 </script>
 </body>
